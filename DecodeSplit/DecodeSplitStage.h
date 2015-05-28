@@ -7,6 +7,7 @@
 #include <string>
 #include <QFuture>
 #include <QFutureWatcher>
+#include <QApplication>
 #include "DecodeSplit/DecodeSplitResult.h"
 #include "mainwindow.h"
 

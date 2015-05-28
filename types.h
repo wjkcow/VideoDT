@@ -20,8 +20,8 @@ struct VideoSection{
     QString to_qstring(){
         return QString(to_string().c_str());
     }
-    int from_frame;
-    int to_frame;
+    int from_frame = 0;
+    int to_frame = 0;
 };
 
 struct VideoInfo{

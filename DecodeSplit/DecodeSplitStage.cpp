@@ -41,6 +41,7 @@ void DecodeSplitStage::run_thread(){
         std::vector<int> key_frames = pipeline.run();
         qDebug() << pipeline.get_frame_n() << " frame_number " ;
         result = new DecodeSplitResult(video_info, key_frames);
+        result->moveToThread(QApplication::instance()->thread());
     } catch(Exception& e){
              qDebug() << e.what().c_str();
              window->enable_left_panel();

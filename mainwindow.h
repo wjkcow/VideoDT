@@ -24,6 +24,7 @@ public:
     void enable_left_panel();
     void disable_left_panel();
 private slots:
+    //void update_frame(int n);
     void scene_split_done(DecodeSplitResult* result);
     void on_videoFileSelectButton_clicked();
 

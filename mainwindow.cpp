@@ -49,8 +49,8 @@ void MainWindow::set_up_scene_edit(){
     vcap->moveToThread(&captureThread);
     scene_video_ui->connect(vcap, SIGNAL(frame_ready(cv::Mat*)),
                            SLOT(show_frame(cv::Mat*)));
-  //  vcap->load(dss->get_input_file());
-    vcap->load(dss->get_input_file());
+  //  vcap->load("/Users/wjkcow/Desktop/Fiesta.mp4");
+     vcap->load(dss->get_input_file());
     connect(ui->playButton, SIGNAL(clicked()), vcap, SLOT(play()));
     connect(ui->pauseButton, SIGNAL(clicked()), vcap, SLOT(pause()));
     connect(ui->nextFrameButton, SIGNAL(clicked()), vcap, SLOT(next_frame()));
@@ -63,10 +63,10 @@ void MainWindow::set_up_scene_edit(){
 }
 
 void MainWindow::scene_split_done(DecodeSplitResult* result_){
+    ui->rightPanel->setEnabled(true);
     ds_result = result_;
     set_up_scene_edit();
     ds_result->set_list_view(ui->sceneList);
-    ui->rightPanel->setEnabled(true);
 }
 
 void MainWindow::log(const QString& qstr){
@@ -138,11 +138,6 @@ void MainWindow::on_sceneEndButton_clicked()
     QMetaObject::invokeMethod(vcap, "jump_to_frame", Q_ARG(int, ds_result->get_scene_end()));
 }
 
-//void MainWindow::on_removeSceneBUtton_clicked()
-//{
-//    ds_result->remove_selected_section();
-//}
-
 void MainWindow::on_sceneList_clicked(const QModelIndex &index)
 {
     ds_result->select_scene(VideoSection(ui->sceneList->item(index.row())->text().toStdString()));
@@ -157,6 +152,7 @@ void MainWindow::on_setStartButton_clicked()
 
 void MainWindow::on_setEndButton_clicked()
 {
-    ds_result->set_scence_start();
+    ds_result->set_scene_end();
     ui->newToFrame->setText(QString::number(ui->toFrame->value()));
 }
+

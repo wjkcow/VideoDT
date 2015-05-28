@@ -19,3 +19,24 @@ void DecodeSplitResult::update_list_view(){
         list_view->addItem(data_[i].to_qstring());
     }
 }
+
+void DecodeSplitResult::set_current_frame(int n){
+    qDebug() << "cur_frame is set";
+    current_frame = n;
+}
+void DecodeSplitResult::set_scence_start(){
+    new_section_to_add.from_frame = current_frame;
+}
+void DecodeSplitResult::set_scene_end(){
+    new_section_to_add.to_frame = current_frame;
+}
+void DecodeSplitResult::add_scene(){
+    qDebug() << "new scene added";
+    add_section(new_section_to_add);
+    update_list_view();
+}
+void DecodeSplitResult::remove_selected_section(){
+    qDebug() << "selected scene deleted";
+    delete_section(selected);
+    update_list_view();
+}

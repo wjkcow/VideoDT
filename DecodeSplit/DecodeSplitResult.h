@@ -36,7 +36,7 @@ public:
                                     const VideoSection& vs_r){
             return vs_l.from_frame < vs_r.from_frame;
         });
-        if(ite->from_frame != vs.from_frame || ite->to_frame != vs.from_frame){
+        if(ite->from_frame != vs.from_frame || ite->to_frame != vs.to_frame){
             qDebug() << "Trying to remove non-existing section";
             return;
         }
@@ -54,31 +54,17 @@ public:
 
 
 public slots:
-    void set_current_frame(int n){
-        current_frame = n;
-    }
-    void set_scence_start(){
-        new_section_to_add.from_frame = current_frame;
-    }
-    void set_scene_end(){
-        new_section_to_add.to_frame = current_frame;
-    }
-    void add_scene(){
-        qDebug() << "new scene added";
-        add_section(new_section_to_add);
-        update_list_view();
-    }
-    void remove_selected_section(){
-        qDebug() << "selected scene deleted";
-        delete_section(selected);
-        update_list_view();
-    }
+    void set_current_frame(int n);
+    void set_scence_start();
+    void set_scene_end();
+    void add_scene();
+    void remove_selected_section();
 private:
     void update_list_view();
     std::vector<VideoSection> data_;
     VideoInfo* video_info;
     VideoSection selected;
-    int current_frame;
+    int current_frame = 0;
     VideoSection new_section_to_add;
     QListWidget* list_view;
 };
