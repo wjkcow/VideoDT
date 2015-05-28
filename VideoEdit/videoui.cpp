@@ -5,10 +5,11 @@
 #include <iostream>
 #include <QDebug>
 #include <QPixmap>
-VideoUI::VideoUI(QWidget* place, QWidget * parent):VideoUI(place){
+VideoUI::VideoUI(QWidget* place, QWidget * parent, bool drawable_):VideoUI(place->parentWidget()){
     move(place->pos());
     setFixedWidth(place->width());
     setFixedHeight(place->height());
+    drawable = drawable_;
 }
 
 VideoUI::VideoUI(QWidget * parent) : QWidget(parent){
@@ -18,19 +19,21 @@ VideoUI::VideoUI(QWidget * parent) : QWidget(parent){
 }
 
 void VideoUI::paintEvent(QPaintEvent *){
-    QImage img(m_frame->data, m_frame->cols, m_frame->rows, m_frame->step,
-                                           QImage::Format_RGB888);
-//    if (img.size() != size()) setFixedSize(img.size());
+    if(m_frame){
+        QImage img(m_frame->data, m_frame->cols, m_frame->rows, m_frame->step,
+                               QImage::Format_RGB888);
+        qDebug() << "paint_Event";
+        QPainter p(this);
 
-    qDebug() << "paint_Event";
-     QPainter p(this);
-     p.eraseRect(0,0,img.width(), img.height());
-   // p.eraseRect(0,0,this->size().width(),this->size().height());
-     p.setPen(Qt::blue);
-     p.drawImage(0,0,img);
+        p.eraseRect(0,0,img.width(), img.height());
+        p.setPen(Qt::blue);
+        p.drawImage(0,0,img);
 
-     p.drawRect(draw_rect);
-   // m_img = QImage();
+        if(drawable){
+            p.drawRect(draw_rect);
+        }
+    }
+
 }
 
 void VideoUI::mousePressEvent(QMouseEvent* event){

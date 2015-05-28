@@ -22,6 +22,7 @@ void DecodeSplitStage::run(){
 
         m_future = QtConcurrent::run(this, &DecodeSplitStage::run_thread);
         m_future_watcher.setFuture(m_future);
+        window->disable_left_panel();
     }
 
 }
@@ -33,13 +34,14 @@ void DecodeSplitStage::run_thread(){
                         algorithm.toStdString(),
                         method.toStdString(),
                         threshold, video_info->compress_x, video_info->compress_y);
-    qDebug() << "algorithm started" ;
+    window->log("Scene spliting algorithm is started");
     result = nullptr;
     try{
         std::vector<int> key_frames = pipeline.run();
         result = new DecodeSplitResult(video_info, key_frames);
     } catch(Exception& e){
              qDebug() << e.what().c_str();
+             window->enable_left_panel();
 
     }catch(...){
         qDebug() << "run fail cause of unknown exception" ;

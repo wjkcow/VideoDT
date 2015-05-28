@@ -17,6 +17,9 @@ struct VideoSection{
         ss << from_frame << to_frame;
         return ss.str();
     }
+    QString to_qstring(){
+        return QString(to_string().c_str());
+    }
     int from_frame;
     int to_frame;
 };

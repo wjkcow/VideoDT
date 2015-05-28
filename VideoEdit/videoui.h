@@ -17,6 +17,7 @@ class VideoUI : public QWidget
     cv::Mat* m_frame;
     QPointF rect_start_point;
     QRect   draw_rect;
+    bool   drawable = false;
     bool   draw_started = false;
     VideoUI(VideoUI&&) = delete;
     VideoUI(const VideoUI&) = delete;
@@ -28,7 +29,7 @@ class VideoUI : public QWidget
     void mouseMoveEvent(QMouseEvent* event) override;
     void mouseReleaseEvent(QMouseEvent* event) override;
 public:
-    VideoUI(QWidget* place, QWidget * parent);
+    VideoUI(QWidget* place, QWidget * parent, bool drawable_ = false);
     VideoUI(QWidget* parent = 0);
 public slots:
     void show_frame(cv::Mat* frame);

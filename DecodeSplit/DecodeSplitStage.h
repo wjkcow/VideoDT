@@ -21,6 +21,7 @@ public:
     void set_video_file(const QString& input_file_){input_file = input_file_;}
     void set_tmp_path(const QString& tmp_path_){video_info->tmp_path = tmp_path_;}
     void set_output_file(const QString& output_file_){video_info->output_file = output_file_;}
+
 signals:
     void handle_result(DecodeSplitResult* result);
 public slots:

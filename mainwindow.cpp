@@ -1,4 +1,5 @@
 #include <QFileDialog>
+#include <QMetaObject>
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "DecodeSplit/DecodeSplitStage.h"
@@ -13,14 +14,23 @@ MainWindow::MainWindow(QWidget *parent) :
     log("Program Started");
     log("Please select file");
     dss = new DecodeSplitStage(this);
+    scene_video_ui= new VideoUI(ui->videoUI, this);
+    ui->videoUI = scene_video_ui;
     set_up_scene_split();
+    ui->rightPanel->setEnabled(false);
 }
 
 MainWindow::~MainWindow()
 {
     delete ui;
 }
+void MainWindow::enable_left_panel(){
+    ui->leftPanel->setEnabled(true);
+}
 
+void MainWindow::disable_left_panel(){
+    ui->leftPanel->setEnabled(false);
+}
 void MainWindow::set_up_scene_split(){
     connect(ui->selectHistButton, SIGNAL(pressed()), dss, SLOT(set_hist()));
     connect(ui->selectPHAButton, SIGNAL(pressed()), dss, SLOT(set_pha()));
@@ -33,12 +43,13 @@ void MainWindow::set_up_scene_split(){
 
 }
 void MainWindow::set_up_scene_edit(){
-    VideoUI* vui = new VideoUI(ui->videoUI, this);
-    VideoCapture* vcap = new VideoCapture(vui->width(), vui->height());
+    qDebug() << "scene scene edit set";
+    vcap = new VideoCapture(scene_video_ui->width(), scene_video_ui->height());
     captureThread.start();
     vcap->moveToThread(&captureThread);
-    vui->connect(vcap, SIGNAL(frame_ready(cv::Mat*)),
+    scene_video_ui->connect(vcap, SIGNAL(frame_ready(cv::Mat*)),
                            SLOT(show_frame(cv::Mat*)));
+  //  vcap->load(dss->get_input_file());
     vcap->load(dss->get_input_file());
     connect(ui->playButton, SIGNAL(clicked()), vcap, SLOT(play()));
     connect(ui->pauseButton, SIGNAL(clicked()), vcap, SLOT(pause()));
@@ -47,8 +58,10 @@ void MainWindow::set_up_scene_edit(){
 }
 
 void MainWindow::scene_split_done(DecodeSplitResult* result_){
-    result = result_;
+    ds_result = result_;
     set_up_scene_edit();
+    ds_result->set_list_view(ui->sceneList);
+    ui->rightPanel->setEnabled(true);
 }
 
 void MainWindow::log(const QString& qstr){
@@ -99,7 +112,27 @@ void MainWindow::on_outputPathButton_clicked()
     }
 }
 
-//void MainWindow::on_selectHistButton_clicked()
-//{
 
-//}
+void MainWindow::on_jumpToFrame_clicked()
+{
+}
+
+void MainWindow::on_sceneStartButton_clicked()
+{
+   QMetaObject::invokeMethod(vcap, "jump_to_frame", Q_ARG(int ,ds_result->get_scene_start()));
+}
+
+void MainWindow::on_sceneEndButton_clicked()
+{
+    QMetaObject::invokeMethod(vcap, "jump_to_frame", Q_ARG(int, ds_result->get_scene_end()));
+}
+
+void MainWindow::on_removeSceneBUtton_clicked()
+{
+
+}
+
+void MainWindow::on_sceneList_clicked(const QModelIndex &index)
+{
+    ds_result->select_scene(VideoSection(ui->sceneList->item(index.row())->text().toStdString()));
+}

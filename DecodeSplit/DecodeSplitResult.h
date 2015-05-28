@@ -1,6 +1,8 @@
 #ifndef DECODESPLITRESULT_H
 #define DECODESPLITRESULT_H
 #include <QObject>
+#include <QListWidget>
+#include <QDebug>
 #include <vector>
 #include <algorithm>
 #include <cassert>
@@ -10,7 +12,11 @@ class DecodeSplitResult : public QObject
 {
     Q_OBJECT
 public:
-    DecodeSplitResult(VideoInfo* video_info_, const std::vector<int>& key_frames );
+    DecodeSplitResult(VideoInfo* video_info_, const std::vector<int>& key_frames);
+    void set_list_view(QListWidget* list_view_){
+        list_view = list_view_;
+        update_list_view();
+    }
     const std::vector<VideoSection>& get_data(){
         return data_;
     }
@@ -28,7 +34,8 @@ public:
             return vs_l.from_frame < vs_r.from_frame;
         });
         if(ite->from_frame != vs.from_frame || ite->to_frame != vs.from_frame){
-            assert(0);
+            qDebug() << "Trying to remove non-existing section";
+            return;
         }
         data_.erase(ite);
     }
@@ -55,13 +62,19 @@ public slots:
     }
     void add_scene(){
         add_section(new_section_to_add);
+        update_list_view();
+    }
+    void remove_selected_section(){
+        update_list_view();
     }
 private:
+    void update_list_view();
     std::vector<VideoSection> data_;
     VideoInfo* video_info;
     VideoSection selected;
     int current_frame;
     VideoSection new_section_to_add;
+    QListWidget* list_view;
 };
 
 #endif // DECODESPLITRESULT_H
