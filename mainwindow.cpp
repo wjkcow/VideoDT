@@ -1,6 +1,8 @@
+#include <QFileDialog>
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
-#include <QFileDialog>
+#include "DecodeSplit/DecodeSplitStage.h"
+
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
@@ -8,7 +10,14 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->setupUi(this);
     log("Program Started");
     log("Please select file");
-
+    dss = new DecodeSplitStage(this);
+    connect(ui->selectHistButton, SIGNAL(pressed()), dss, SLOT(set_hist()));
+    connect(ui->selectPHAButton, SIGNAL(pressed()), dss, SLOT(set_pha()));
+    connect(ui->selectMethod, SIGNAL(currentIndexChanged(const QString &)), dss, SLOT(set_method(QString)));
+    connect(ui->methodThreshold, SIGNAL(valueChanged(double)), dss, SLOT(set_threshold(double)));
+    connect(ui->compressX,SIGNAL(valueChanged(int)), dss, SLOT(set_width(int)));
+    connect(ui->compressY,SIGNAL(valueChanged(int)), dss, SLOT(set_height(int)));
+    connect(ui->runAlgorithm, SIGNAL(pressed()), dss, SLOT(run()));
 
 }
 
@@ -35,6 +44,7 @@ void MainWindow::on_videoFileSelectButton_clicked()
 
         ui->videoFilePathText->clear();
         ui->videoFilePathText->append(fileName);
+        dss->set_video_file(fileName);
     }
 }
 
@@ -48,6 +58,7 @@ void MainWindow::on_tmpFilePathButton_clicked()
 
         ui->tmpPathText->clear();
         ui->tmpPathText->append(tmpPath);
+        dss->set_tmp_path(tmpPath);
     }
 }
 
@@ -59,7 +70,13 @@ void MainWindow::on_outputPathButton_clicked()
     } else {
         log("file selected " + outputPath );
 
-        ui->tmpPathText->clear();
-        ui->tmpPathText->append(outputPath );
+        ui->outputPathText->clear();
+        ui->outputPathText->append(outputPath);
+        dss->set_output_file(outputPath);
     }
 }
+
+//void MainWindow::on_selectHistButton_clicked()
+//{
+
+//}

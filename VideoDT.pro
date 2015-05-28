@@ -14,21 +14,30 @@ CONFIG += c++11
 
 SOURCES += main.cpp\
     mainwindow.cpp \
-    decodesplitstage.cpp \
-    decodesplitresult.cpp
+    DecodeSplit/DecodeSplitResult.cpp \
+    DecodeSplit/DecodeSplitStage.cpp \
+    DecodeSplit/DSPipeline/DecoderFilter.cpp \
+    DecodeSplit/DSPipeline/DSPipeline.cpp \
+    DecodeSplit/DSPipeline/FrameTypes.cpp \
+    DecodeSplit/DSPipeline/HistFilter.cpp \
+    DecodeSplit/DSPipeline/PHAFilter.cpp \
+    DecodeSplit/DSPipeline/SplitFilter.cpp \
+    DecodeSplit/DSPipeline/Utility.cpp \
+    DecodeSplit/DSPipeline/WriterFilter.cpp
 
 HEADERS  += \
     mainwindow.h \
-    decodesplitstage.h \
-    decodesplitresult.h \
     types.h \
-    ../../../Dropbox/opcv/opcv/DecoderFilter.h \
-    ../../../Dropbox/opcv/opcv/DSPipeline.h \
-    ../../../Dropbox/opcv/opcv/FrameTypes.h \
-    ../../../Dropbox/opcv/opcv/HistFilter.h \
-    ../../../Dropbox/opcv/opcv/PHAFilter.h \
-    ../../../Dropbox/opcv/opcv/SplitFilter.h \
-    ../../../Dropbox/opcv/opcv/WriterFilter.h
+    DecodeSplit/DecodeSplitResult.h \
+    DecodeSplit/DecodeSplitStage.h \
+    DecodeSplit/DSPipeline/DecoderFilter.h \
+    DecodeSplit/DSPipeline/DSPipeline.h \
+    DecodeSplit/DSPipeline/FrameTypes.h \
+    DecodeSplit/DSPipeline/HistFilter.h \
+    DecodeSplit/DSPipeline/PHAFilter.h \
+    DecodeSplit/DSPipeline/SplitFilter.h \
+    DecodeSplit/DSPipeline/Utility.h \
+    DecodeSplit/DSPipeline/WriterFilter.h
 
 FORMS    += \
     mainwindow.ui
@@ -48,4 +57,3 @@ LIBS += -L/usr/local/lib\
      -lopencv_legacy \
      -lopencv_stitching \
      -ltbb
-

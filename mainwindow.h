@@ -3,6 +3,7 @@
 
 #include <QMainWindow>
 #include <string>
+class DecodeSplitStage;
 
 namespace Ui {
 class MainWindow;
@@ -15,6 +16,7 @@ class MainWindow : public QMainWindow
 public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
+    void log(const QString& qstr);
 
 private slots:
     void on_videoFileSelectButton_clicked();
@@ -25,7 +27,7 @@ private slots:
 
 private:
     Ui::MainWindow *ui;
-    void log(const QString& qstr);
+    DecodeSplitStage *dss;
 };
 
 #endif // MAINWINDOW_H
