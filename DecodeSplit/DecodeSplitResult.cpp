@@ -11,9 +11,6 @@ DecodeSplitResult::DecodeSplitResult(VideoInfo* video_info_, const std::vector<i
             data_.push_back(VideoSection(key_frames[i], video_info->total_frame_n));
         }
     }
-    for(int i = 0; i < data_.size(); i++){
-        qDebug() << data_[i].to_qstring();
-    }
 }
 
 void DecodeSplitResult::update_list_view(){

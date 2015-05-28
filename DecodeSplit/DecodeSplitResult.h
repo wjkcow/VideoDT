@@ -13,6 +13,9 @@ class DecodeSplitResult : public QObject
     Q_OBJECT
 public:
     DecodeSplitResult(VideoInfo* video_info_, const std::vector<int>& key_frames);
+    int get_total_frame(){
+        return video_info->total_frame_n;
+    }
     void set_list_view(QListWidget* list_view_){
         list_view = list_view_;
         update_list_view();
@@ -61,10 +64,13 @@ public slots:
         new_section_to_add.to_frame = current_frame;
     }
     void add_scene(){
+        qDebug() << "new scene added";
         add_section(new_section_to_add);
         update_list_view();
     }
     void remove_selected_section(){
+        qDebug() << "selected scene deleted";
+        delete_section(selected);
         update_list_view();
     }
 private:

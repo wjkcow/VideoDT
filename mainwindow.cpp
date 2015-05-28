@@ -55,6 +55,11 @@ void MainWindow::set_up_scene_edit(){
     connect(ui->pauseButton, SIGNAL(clicked()), vcap, SLOT(pause()));
     connect(ui->nextFrameButton, SIGNAL(clicked()), vcap, SLOT(next_frame()));
     connect(ui->preFrameButton, SIGNAL(clicked()), vcap, SLOT(pre_frame()));
+    connect(ui->addScene, SIGNAL(clicked()), ds_result, SLOT(add_scene()));
+    connect(ui->removeScene, SIGNAL(clicked()), ds_result, SLOT(remove_selected_section()));
+
+    connect(vcap, SIGNAL(new_frame_fired(int)), ui->toFrame, SLOT(setValue(int)));
+    connect(vcap, SIGNAL(new_frame_fired(int)), ds_result, SLOT(set_current_frame(int)));
 }
 
 void MainWindow::scene_split_done(DecodeSplitResult* result_){
@@ -115,6 +120,12 @@ void MainWindow::on_outputPathButton_clicked()
 
 void MainWindow::on_jumpToFrame_clicked()
 {
+    if(ui->toFrame->value() > ds_result->get_total_frame()){
+        ui->toFrame->setValue(0);
+    }
+    QMetaObject::invokeMethod(vcap, "jump_to_frame", Q_ARG(int ,ui->toFrame->value()));
+
+
 }
 
 void MainWindow::on_sceneStartButton_clicked()
@@ -127,12 +138,25 @@ void MainWindow::on_sceneEndButton_clicked()
     QMetaObject::invokeMethod(vcap, "jump_to_frame", Q_ARG(int, ds_result->get_scene_end()));
 }
 
-void MainWindow::on_removeSceneBUtton_clicked()
-{
-
-}
+//void MainWindow::on_removeSceneBUtton_clicked()
+//{
+//    ds_result->remove_selected_section();
+//}
 
 void MainWindow::on_sceneList_clicked(const QModelIndex &index)
 {
     ds_result->select_scene(VideoSection(ui->sceneList->item(index.row())->text().toStdString()));
+    on_sceneStartButton_clicked();
+}
+
+void MainWindow::on_setStartButton_clicked()
+{
+    ds_result->set_scence_start();
+    ui->newFromFrame->setText(QString::number(ui->toFrame->value()));
+}
+
+void MainWindow::on_setEndButton_clicked()
+{
+    ds_result->set_scence_start();
+    ui->newToFrame->setText(QString::number(ui->toFrame->value()));
 }

@@ -37,9 +37,11 @@ private slots:
 
     void on_sceneEndButton_clicked();
 
-    void on_removeSceneBUtton_clicked();
-
     void on_sceneList_clicked(const QModelIndex &index);
+
+    void on_setStartButton_clicked();
+
+    void on_setEndButton_clicked();
 
 private:
     Ui::MainWindow *ui;

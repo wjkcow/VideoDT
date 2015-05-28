@@ -71,7 +71,7 @@ void VideoCapture::capture_fire_frame(){
      //                              QImage::Format_RGB888);
         //Q_ASSERT(image.constBits() == frame.data);
         qDebug() << "capture done" ;
-
+        emit new_frame_fired(frame_n - 1);
         emit frame_ready(frame);
     } else {
         qDebug() << "fail to read" ;

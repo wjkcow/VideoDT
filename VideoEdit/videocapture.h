@@ -37,6 +37,7 @@ public slots:
 
 signals:
     void frame_ready(cv::Mat *frame);
+    void new_frame_fired(int frame_n);
     void fail_open_file();
 
 private:
