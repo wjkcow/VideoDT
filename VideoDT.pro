@@ -23,7 +23,9 @@ SOURCES += main.cpp\
     DecodeSplit/DSPipeline/PHAFilter.cpp \
     DecodeSplit/DSPipeline/SplitFilter.cpp \
     DecodeSplit/DSPipeline/Utility.cpp \
-    DecodeSplit/DSPipeline/WriterFilter.cpp
+    DecodeSplit/DSPipeline/WriterFilter.cpp \
+    VideoEdit/videocapture.cpp \
+    VideoEdit/videoui.cpp
 
 HEADERS  += \
     mainwindow.h \
@@ -37,7 +39,9 @@ HEADERS  += \
     DecodeSplit/DSPipeline/PHAFilter.h \
     DecodeSplit/DSPipeline/SplitFilter.h \
     DecodeSplit/DSPipeline/Utility.h \
-    DecodeSplit/DSPipeline/WriterFilter.h
+    DecodeSplit/DSPipeline/WriterFilter.h \
+    VideoEdit/videocapture.h \
+    VideoEdit/videoui.h
 
 FORMS    += \
     mainwindow.ui

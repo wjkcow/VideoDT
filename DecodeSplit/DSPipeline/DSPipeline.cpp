@@ -31,8 +31,7 @@ std::vector<int> DSPipeline::run(){
     pipeline.add_filter(decoder);
     shared_ptr<SplitFilter> splitter = SplitFilter::factory(algorithm, method, total_frame_n);
     pipeline.add_filter(*splitter);
-
-    WriterFilter writer("/Users/wjkcow/Desktop/ims/im%05d.png",8,8);
+    WriterFilter writer(tmp_path,compress_x,compress_y);
     pipeline.add_filter(writer);
     pipeline.run(VideoDecoderFilter::get_pipeline_n());
     pipeline.clear();

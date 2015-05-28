@@ -77,6 +77,9 @@
     </property>
    </widget>
    <widget class="QStackedWidget" name="stackedWidget">
+    <property name="enabled">
+     <bool>true</bool>
+    </property>
     <property name="geometry">
      <rect>
       <x>0</x>
@@ -344,6 +347,9 @@ p, li { white-space: pre-wrap; }
              <property name="text">
               <string>Hist Compare</string>
              </property>
+             <property name="checked">
+              <bool>true</bool>
+             </property>
             </widget>
            </item>
            <item>
@@ -456,7 +462,7 @@ p, li { white-space: pre-wrap; }
        </item>
       </layout>
      </widget>
-     <widget class="QListView" name="listView">
+     <widget class="QListView" name="sceneList">
       <property name="geometry">
        <rect>
         <x>850</x>
@@ -627,7 +633,7 @@ p, li { white-space: pre-wrap; }
         </widget>
        </item>
        <item row="1" column="0">
-        <widget class="QPushButton" name="stopButton">
+        <widget class="QPushButton" name="pauseButton">
          <property name="text">
           <string>Stop</string>
          </property>

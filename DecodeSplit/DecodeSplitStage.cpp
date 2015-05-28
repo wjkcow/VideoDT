@@ -8,12 +8,14 @@
 #include "DSPipeline/DSPipeline.h"
 
 DecodeSplitStage::DecodeSplitStage(MainWindow* window_): window(window_){
+    video_info = new VideoInfo;
     connect(&m_future_watcher, SIGNAL(finished()),
             this, SLOT(receive_result()));
 }
 
 void DecodeSplitStage::run(){
-    if(!input_file.size() || !tmp_path.size() || !output_file.size()){
+    if(!input_file.size() || !video_info->tmp_path.size()
+            || !video_info->output_file.size()){
         window->log("Error: please set files and paths");
         return;
     } else {
@@ -27,19 +29,20 @@ void DecodeSplitStage::run(){
 
 void DecodeSplitStage::run_thread(){
     DSPipeline pipeline(input_file.toStdString(),
-                        tmp_path.toStdString(),
+                        (video_info->tmp_path + video_info->tmp_file_fmt).toStdString(),
                         algorithm.toStdString(),
                         method.toStdString(),
-                        threshold, compress_x, compress_y);
-    qDebug() << "algorithm start" ;
-    try{    std::vector<int> resul = pipeline.run();
-        qDebug() << "done" ;
-        for(int i =0; i <resul.size(); i++)
-            qDebug()<< resul[i] << " ";
-        } catch(Exception& e){
+                        threshold, video_info->compress_x, video_info->compress_y);
+    qDebug() << "algorithm started" ;
+    result = nullptr;
+    try{
+        std::vector<int> key_frames = pipeline.run();
+        result = new DecodeSplitResult(video_info, key_frames);
+    } catch(Exception& e){
              qDebug() << e.what().c_str();
-        }catch(...){
-        qDebug() << "run faile" ;
+
+    }catch(...){
+        qDebug() << "run fail cause of unknown exception" ;
     }
 
 

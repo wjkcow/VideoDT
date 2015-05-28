@@ -2,7 +2,9 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "DecodeSplit/DecodeSplitStage.h"
-
+#include "DecodeSplit/DecodeSplitResult.h"
+#include "VideoEdit/videoui.h"
+#include "VideoEdit/videocapture.h"
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
@@ -11,14 +13,7 @@ MainWindow::MainWindow(QWidget *parent) :
     log("Program Started");
     log("Please select file");
     dss = new DecodeSplitStage(this);
-    connect(ui->selectHistButton, SIGNAL(pressed()), dss, SLOT(set_hist()));
-    connect(ui->selectPHAButton, SIGNAL(pressed()), dss, SLOT(set_pha()));
-    connect(ui->selectMethod, SIGNAL(currentIndexChanged(const QString &)), dss, SLOT(set_method(QString)));
-    connect(ui->methodThreshold, SIGNAL(valueChanged(double)), dss, SLOT(set_threshold(double)));
-    connect(ui->compressX,SIGNAL(valueChanged(int)), dss, SLOT(set_width(int)));
-    connect(ui->compressY,SIGNAL(valueChanged(int)), dss, SLOT(set_height(int)));
-    connect(ui->runAlgorithm, SIGNAL(pressed()), dss, SLOT(run()));
-
+    set_up_scene_split();
 }
 
 MainWindow::~MainWindow()
@@ -26,10 +21,38 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
+void MainWindow::set_up_scene_split(){
+    connect(ui->selectHistButton, SIGNAL(pressed()), dss, SLOT(set_hist()));
+    connect(ui->selectPHAButton, SIGNAL(pressed()), dss, SLOT(set_pha()));
+    connect(ui->selectMethod, SIGNAL(currentIndexChanged(const QString &)), dss, SLOT(set_method(QString)));
+    connect(ui->methodThreshold, SIGNAL(valueChanged(double)), dss, SLOT(set_threshold(double)));
+    connect(ui->compressX,SIGNAL(valueChanged(int)), dss, SLOT(set_width(int)));
+    connect(ui->compressY,SIGNAL(valueChanged(int)), dss, SLOT(set_height(int)));
+    connect(ui->runAlgorithm, SIGNAL(pressed()), dss, SLOT(run()));
+    connect(dss, SIGNAL(handle_result(DecodeSplitResult*)), this, SLOT(scene_split_done(DecodeSplitResult*)));
+
+}
+void MainWindow::set_up_scene_edit(){
+    VideoUI* vui = new VideoUI(ui->videoUI, this);
+    VideoCapture* vcap = new VideoCapture(vui->width(), vui->height());
+    captureThread.start();
+    vcap->moveToThread(&captureThread);
+    vui->connect(vcap, SIGNAL(frame_ready(cv::Mat*)),
+                           SLOT(show_frame(cv::Mat*)));
+    vcap->load(dss->get_input_file());
+    connect(ui->playButton, SIGNAL(clicked()), vcap, SLOT(play()));
+    connect(ui->pauseButton, SIGNAL(clicked()), vcap, SLOT(pause()));
+    connect(ui->nextFrameButton, SIGNAL(clicked()), vcap, SLOT(next_frame()));
+    connect(ui->preFrameButton, SIGNAL(clicked()), vcap, SLOT(pre_frame()));
+}
+
+void MainWindow::scene_split_done(DecodeSplitResult* result_){
+    result = result_;
+    set_up_scene_edit();
+}
 
 void MainWindow::log(const QString& qstr){
     ui->logText->append(qstr);
-
 }
 
 void MainWindow::on_videoFileSelectButton_clicked()

@@ -15,11 +15,12 @@ class DecodeSplitStage : public QObject
     Q_OBJECT
 public:
     DecodeSplitStage(MainWindow* window_);
-
+    QString get_input_file(){return input_file;}
+    int get_total_frame_n(){return video_info->total_frame_n;}
 
     void set_video_file(const QString& input_file_){input_file = input_file_;}
-    void set_tmp_path(const QString& tmp_path_){tmp_path = tmp_path_;}
-    void set_output_file(const QString& output_file_){output_file = output_file_;}
+    void set_tmp_path(const QString& tmp_path_){video_info->tmp_path = tmp_path_;}
+    void set_output_file(const QString& output_file_){video_info->output_file = output_file_;}
 signals:
     void handle_result(DecodeSplitResult* result);
 public slots:
@@ -44,25 +45,22 @@ public slots:
         window->log((QString("The thresold of algorithm is set to ") + QString::number(threshold)));
     }
     void set_width(int x){
-        compress_x = x;
+        video_info->compress_x = x;
         window->log(QString("The width is set to ") + QString::number(x));
     }
     void set_height(int y){
-        compress_y = y;
+        video_info->compress_y = y;
         window->log(QString("The height is set to ") + QString::number(y));
     }
 private:
     void run_thread();
     QString input_file;
-    QString tmp_path;
-    QString output_file;
     QString algorithm = "hist";
     QString method = "Correlation";
     double threshold = 0.8;
-    int compress_x = 640;
-    int compress_y = 320;
+
+    VideoInfo* video_info;
     DecodeSplitResult* result;
-    int total_frame_n;
     MainWindow* window;
     QFuture<void> m_future;
     QFutureWatcher<void> m_future_watcher;
