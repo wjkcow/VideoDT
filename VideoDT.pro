@@ -25,7 +25,8 @@ SOURCES += main.cpp\
     DecodeSplit/DSPipeline/Utility.cpp \
     DecodeSplit/DSPipeline/WriterFilter.cpp \
     VideoEdit/videocapture.cpp \
-    VideoEdit/videoui.cpp
+    VideoEdit/videoui.cpp \
+    DecodeSplit/DSPipeline/CompressFilter.cpp
 
 HEADERS  += \
     mainwindow.h \
@@ -41,7 +42,8 @@ HEADERS  += \
     DecodeSplit/DSPipeline/Utility.h \
     DecodeSplit/DSPipeline/WriterFilter.h \
     VideoEdit/videocapture.h \
-    VideoEdit/videoui.h
+    VideoEdit/videoui.h \
+    DecodeSplit/DSPipeline/CompressFilter.h
 
 FORMS    += \
     mainwindow.ui

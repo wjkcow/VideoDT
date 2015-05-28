@@ -19,6 +19,7 @@ void DecodeSplitStage::run(){
         window->log("Error: please set files and paths");
         return;
     } else {
+        window->log("Scene splitting started");
 
         m_future = QtConcurrent::run(this, &DecodeSplitStage::run_thread);
         m_future_watcher.setFuture(m_future);
@@ -34,10 +35,11 @@ void DecodeSplitStage::run_thread(){
                         algorithm.toStdString(),
                         method.toStdString(),
                         threshold, video_info->compress_x, video_info->compress_y);
-    window->log("Scene spliting algorithm is started");
     result = nullptr;
     try{
+        video_info->total_frame_n = pipeline.get_frame_n();
         std::vector<int> key_frames = pipeline.run();
+        qDebug() << pipeline.get_frame_n() << " frame_number " ;
         result = new DecodeSplitResult(video_info, key_frames);
     } catch(Exception& e){
              qDebug() << e.what().c_str();

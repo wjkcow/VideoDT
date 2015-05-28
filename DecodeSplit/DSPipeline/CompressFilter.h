@@ -1,18 +1,16 @@
-#ifndef WRITER_FILTER_H
-#define WRITER_FILTER_H
+#ifndef COMPRESS_FILTER_H
+#define COMPRESS_FILTER_H
 
 #include <string>
 #include "tbb/pipeline.h"
 #include "opencv2/opencv.hpp"
 
-class WriterFilter : public tbb::filter{
+class CompressFilter : public tbb::filter{
 public:
-    WriterFilter(const std::string& path_):tbb::filter(false),path{path_}{}
+    CompressFilter(int size_x, int size_y):tbb::filter(false), resize{size_x, size_y}{}
     void* operator()(void* item) override;
 private:
     static  std::vector<int> compression_params;
     cv::Size resize;
-    std::string path;
-
 };
 #endif

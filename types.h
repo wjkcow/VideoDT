@@ -14,7 +14,7 @@ struct VideoSection{
     }
     std::string to_string(){
         std::stringstream ss;
-        ss << from_frame << to_frame;
+        ss << from_frame << "  " <<to_frame;
         return ss.str();
     }
     QString to_qstring(){

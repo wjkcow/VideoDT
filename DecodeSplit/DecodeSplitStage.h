@@ -28,6 +28,7 @@ public slots:
     void run();
 
     void receive_result(){
+       // qDebug() << "Algorithm is done ";
         window->log("Algorithm done, result is received");
         handle_result(result);
     }

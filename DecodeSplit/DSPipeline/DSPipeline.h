@@ -15,6 +15,9 @@ public:
 
     
     std::vector<int> run();
+    int get_frame_n(){
+        return total_frame_n;
+    }
 private:
     std::string input_file;
     std::string tmp_path;

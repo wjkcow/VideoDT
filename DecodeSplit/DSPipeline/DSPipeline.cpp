@@ -1,6 +1,7 @@
 #include "DSPipeline.h"
 
 #include "DecoderFilter.h"
+#include "CompressFilter.h"
 #include "WriterFilter.h"
 #include "SplitFilter.h"
 #include "tbb/task_scheduler_init.h"
@@ -29,9 +30,11 @@ std::vector<int> DSPipeline::run(){
     tbb::pipeline pipeline;
     VideoDecoderFilter decoder(input_file);
     pipeline.add_filter(decoder);
+    CompressFilter compr(compress_x, compress_y);
+    pipeline.add_filter(compr);
     shared_ptr<SplitFilter> splitter = SplitFilter::factory(algorithm, method, total_frame_n);
     pipeline.add_filter(*splitter);
-    WriterFilter writer(tmp_path,compress_x,compress_y);
+    WriterFilter writer(tmp_path);
     pipeline.add_filter(writer);
     pipeline.run(VideoDecoderFilter::get_pipeline_n());
     pipeline.clear();

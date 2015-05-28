@@ -43,7 +43,7 @@ void MainWindow::set_up_scene_split(){
 
 }
 void MainWindow::set_up_scene_edit(){
-    qDebug() << "scene scene edit set";
+    qDebug() << "scene edit se uit";
     vcap = new VideoCapture(scene_video_ui->width(), scene_video_ui->height());
     captureThread.start();
     vcap->moveToThread(&captureThread);
