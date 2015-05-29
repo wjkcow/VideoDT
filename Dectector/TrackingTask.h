@@ -21,7 +21,6 @@ public:
         rect = rect_;
         need_edit = false;
     }
-private:
     Tracker* tracker;
     QRect rect;
     bool  need_edit;

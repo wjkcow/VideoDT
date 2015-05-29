@@ -24,6 +24,8 @@ public:
     void log(const QString& qstr);
     void enable_left_panel();
     void disable_left_panel();
+    void te_draw_start();
+    void te_draw_end();
 private slots:
     //void update_frame(int n);
     void scene_split_done(DecodeSplitResult* result);
@@ -56,6 +58,12 @@ private slots:
     void on_teTrackerStart_clicked();
 
     void on_teTrackerEnd_clicked();
+
+    void on_teEditTracker_clicked();
+
+    void on_teSetEnd_clicked();
+
+    void on_taskListView_activated(const QModelIndex &index);
 
 private:
     Ui::MainWindow *ui;

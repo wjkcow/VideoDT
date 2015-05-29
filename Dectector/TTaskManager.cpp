@@ -66,3 +66,80 @@ void TTaskManager::draw_frame_with_rect(Frame* frame){
         vui->show_frame(frame);
     }
 }
+
+void TTaskManager::select_ctracking_task(const QString& str){
+    for(int i = 0; i < candidate_tasks.size(); i++){
+        if(str == candidate_tasks[i].to_qstring()){
+            selected_ctask_idx = i;
+        }
+    }
+}
+
+void TTaskManager::remove_selected_task(){
+   auto selected = task_list_view->selectedItems();
+   for(int i = 0; i < selected.size(); i ++){
+       for(int j = 0; j < tasks.size(); j++){
+           if(selected[i]->text() == tasks[j].to_qstring()){
+                tasks.erase(tasks.begin() + j);
+           }
+       }
+   }
+   update_task_list_view();
+}
+void TTaskManager::edit_selected(){
+    qDebug() << "Nothing is selected" <<  selected_ctask_idx;
+
+    if(selected_ctask_idx >= 0 && selected_ctask_idx < candidate_tasks.size()){
+        TrackingTask& task = candidate_tasks[selected_ctask_idx];
+        task.from_frame = current_frame;
+        window->te_draw_start();
+        vui->start_draw_rect(task.tracker->color);
+        update_ctask_list_view();
+    } else {
+        QMessageBox msgBox;
+        msgBox.setText("Select a candidate task first");
+        msgBox.exec();
+        return;
+    }
+}
+void TTaskManager::rect_drawed(const QRect& rect){
+    qDebug() << "rect received";
+    window->te_draw_end();
+}
+void TTaskManager::set_end_frame_to_selected(){
+    if(selected_ctask_idx >= 0 && selected_ctask_idx < candidate_tasks.size()){
+        TrackingTask& task = candidate_tasks[selected_ctask_idx];
+        task.to_frame = current_frame;
+        update_ctask_list_view();
+    }
+}
+
+void TTaskManager::add_to_task(){
+    if(selected_ctask_idx >= 0 && selected_ctask_idx < candidate_tasks.size()){
+        TrackingTask& task = candidate_tasks[selected_ctask_idx];
+        tasks.push_back(task);
+        update_task_list_view();
+    }
+}
+
+int TTaskManager::get_tracker_start(){
+    if(selected_ctask_idx >= 0 && selected_ctask_idx < candidate_tasks.size()){
+        TrackingTask& task = candidate_tasks[selected_ctask_idx];
+        return task.from_frame;
+    }
+    return 0;
+}
+int TTaskManager::get_tracker_end(){
+    if(selected_ctask_idx >= 0 && selected_ctask_idx < candidate_tasks.size()){
+        TrackingTask& task = candidate_tasks[selected_ctask_idx];
+        return task.to_frame;
+    }
+    return 0;
+}
+QString TTaskManager::get_tracker_name(){
+    if(selected_ctask_idx >= 0 && selected_ctask_idx < candidate_tasks.size()){
+        TrackingTask& task = candidate_tasks[selected_ctask_idx];
+        return task.tracker->name;
+    }
+    return QString();
+}

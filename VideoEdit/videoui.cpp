@@ -28,13 +28,16 @@ void VideoUI::paintEvent(QPaintEvent *){
         QPainter p(this);
 
         p.eraseRect(0,0,img.width(), img.height());
-        p.setPen(Qt::blue);
         p.drawImage(0,0,img);
 
-        if(drawable){
+        if(draw_started){
+            p.setPen(draw_color);
             p.drawRect(draw_rect);
         }
         for(int i = 0; i < rects.size(); i++){
+            if(draw_started && draw_color == rects[i].first){
+                continue;
+            }
             p.setPen(rects[i].first);
             p.drawRect(rects[i].second);
         }
@@ -43,12 +46,12 @@ void VideoUI::paintEvent(QPaintEvent *){
 }
 
 void VideoUI::mousePressEvent(QMouseEvent* event){
-    qDebug() << name;
-
-     update();
-    qDebug() << event->localPos();
-    draw_started = true;
-    rect_start_point = event->localPos();
+    if(draw_started){
+        update();
+        qDebug() << event->localPos();
+        draw_rect = QRect();
+        rect_start_point = event->localPos();
+    }
 }
 
 void VideoUI::mouseMoveEvent(QMouseEvent *event){
@@ -58,7 +61,7 @@ void VideoUI::mouseMoveEvent(QMouseEvent *event){
                             event->localPos().y());
         update();
     }
-    qDebug() << "move" << event->localPos();
+  //  qDebug() << "move" << event->localPos();
 
 }
 
@@ -68,8 +71,9 @@ void VideoUI::mouseReleaseEvent(QMouseEvent* event){
                              event->localPos().x(),
                              event->localPos().y());
         draw_started = false;
+        drawable = false;
         update();
-
+        emit rect_drawed(draw_rect);
     }
 }
 
@@ -97,7 +101,8 @@ void VideoUI::show_frame(Frame* frame, std::vector<QPair<QColor, QRect>> rects_)
     update();
 }
 
-void VideoUI::start_draw_rect(const QColor){
-
-
+void VideoUI::start_draw_rect(const QColor color){
+   draw_color = color;
+   drawable = true;
+   draw_started = true;
 }

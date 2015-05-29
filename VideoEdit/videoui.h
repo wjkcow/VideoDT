@@ -19,6 +19,7 @@ class VideoUI : public QWidget
     cv::Mat* m_frame;
     QPointF rect_start_point;
     QRect   draw_rect;
+    QColor draw_color;
     bool   drawable = false;
     bool   draw_started = false;
     std::vector<QPair<QColor, QRect>>  rects;

@@ -146,6 +146,7 @@ void MainWindow::on_sceneEndButton_clicked()
 void MainWindow::on_sceneList_clicked(const QModelIndex &index)
 {
     ds_result->select_scene(VideoSection(ui->sceneList->item(index.row())->text().toStdString()));
+
     on_sceneStartButton_clicked();
 }
 
@@ -171,7 +172,7 @@ void MainWindow::on_nextStepButton_clicked()
 }
 
 void MainWindow::set_up_tracking_task(){
-    ttask_manager = new TTaskManager(ds_result, task_video_ui);
+    ttask_manager = new TTaskManager(ds_result, task_video_ui, this);
     ttask_manager->set_ctask_list_view(ui->candidateTaskView);
     ttask_manager->set_task_list_view(ui->taskListView);
     QMetaObject::invokeMethod(vcap, "resize", Q_ARG(QSize,task_video_ui->size()));
@@ -183,6 +184,11 @@ void MainWindow::set_up_tracking_task(){
     connect(ui->tePauseButton, SIGNAL(clicked()), vcap, SLOT(pause()));
     connect(ui->teNextFrame, SIGNAL(clicked()), vcap, SLOT(next_frame()));
     connect(ui->tePreFrame, SIGNAL(clicked()), vcap, SLOT(pre_frame()));
+    connect(ui->teAddTracker, SIGNAL(clicked()), ttask_manager, SLOT(add_to_task()));
+    connect(task_video_ui, SIGNAL(rect_drawed(const QRect&)), ttask_manager, SLOT(rect_drawed(const QRect&)));
+    connect(vcap, SIGNAL(new_frame_fired(int)), ttask_manager, SLOT(set_current_frame(int)));
+    connect(vcap, SIGNAL(new_frame_fired(int)), ui->teToFrame, SLOT(setValue(int)));
+    connect(ui->teRemoveTask, SIGNAL(clicked()), ttask_manager, SLOT(remove_selected_task()));
 }
 void MainWindow::fake_page_2(){
     ds_result = new DecodeSplitResult(dss->video_info,std::vector<int>{0,27,52,76,129,155,189,260,389,422,460,516,585,628,698,724,734,738,759});
@@ -205,7 +211,11 @@ void MainWindow::on_addTracker_clicked()
 
 void MainWindow::on_candidateTaskView_clicked(const QModelIndex &index)
 {
-
+    ttask_manager->select_ctracking_task(ui->candidateTaskView->item(index.row())->text());
+    ui->teFrom->setText(QString::number(ttask_manager->get_tracker_start()));
+    ui->teTo->setText(QString::number(ttask_manager->get_tracker_end()));
+    ui->teTrackerName->setText(ttask_manager->get_tracker_name());
+    on_teTrackerStart_clicked();
 }
 
 void MainWindow::on_teJumpToButton_clicked()
@@ -219,9 +229,42 @@ void MainWindow::on_teJumpToButton_clicked()
 void MainWindow::on_teTrackerStart_clicked()
 {
 
+    QMetaObject::invokeMethod(vcap, "jump_to_frame", Q_ARG(int ,ttask_manager->get_tracker_start()));
 }
 
 void MainWindow::on_teTrackerEnd_clicked()
+{
+    QMetaObject::invokeMethod(vcap, "jump_to_frame", Q_ARG(int ,ttask_manager->get_tracker_end()));
+
+}
+
+void MainWindow::on_teEditTracker_clicked()
+{
+    ttask_manager->edit_selected();
+    ui->teFrom->setText(QString::number(ui->teToFrame->value()));
+
+}
+
+void MainWindow::te_draw_start(){
+    ui->teLeft->setEnabled(false);
+    ui->teRight->setEnabled(false);
+    ui->teUp->setEnabled(false);
+    ui->teDown->setEnabled(false);
+}
+void MainWindow::te_draw_end(){
+    ui->teLeft->setEnabled(true);
+    ui->teRight->setEnabled(true);
+    ui->teUp->setEnabled(true);
+    ui->teDown->setEnabled(true);
+}
+
+void MainWindow::on_teSetEnd_clicked()
+{
+    ttask_manager->set_end_frame_to_selected();
+    ui->teTo->setText(QString::number(ui->teToFrame->value()));
+}
+
+void MainWindow::on_taskListView_activated(const QModelIndex &index)
 {
 
 }
