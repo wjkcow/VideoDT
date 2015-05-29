@@ -6,7 +6,8 @@
 #include <QColor>
 #include <QDebug>
 #include <QMessageBox>
-
+#include "VideoEdit/videoui.h"
+#include "DecodeSplit/DSPipeline/FrameTypes.h"
 QColor color_set[] = {Qt::green, Qt::blue, Qt::red,
                       Qt::cyan, Qt::magenta, Qt::yellow};
 int    color_cur_idx = 0;
@@ -34,15 +35,34 @@ void TTaskManager::add_tracker(const QString& dectector_type,
     for(int i = 0; i < new_tasks.size(); i++){
         candidate_tasks.push_back(new_tasks[i]);
     }
-    update_list_view();
+    update_ctask_list_view();
 }
 
-void TTaskManager::update_list_view(){
-    if(!list_view){
+void TTaskManager::update_ctask_list_view(){
+    if(!ctask_list_view){
         return;
     }
-    list_view->clear();
+    ctask_list_view->clear();
     for(int i = 0; i < candidate_tasks.size(); i++){
-        list_view->addItem(candidate_tasks[i].to_qstring());
+        ctask_list_view->addItem(candidate_tasks[i].to_qstring());
+    }
+}
+void TTaskManager::update_task_list_view(){
+    if(!task_list_view){
+        return;
+    }
+    task_list_view->clear();
+    for(int i = 0; i < tasks.size(); i++){
+        task_list_view->addItem(tasks[i].to_qstring());
+    }
+}
+
+void TTaskManager::draw_frame_with_rect(Frame* frame){
+    std::vector<QPair<QColor, QRect>> rects;
+    rects.push_back(QPair<QColor,QRect>(Qt::green, QRect(10,10,50,50)));
+    if(frame->seq == 0){
+        vui->show_frame(frame, rects);
+    } else {
+        vui->show_frame(frame);
     }
 }

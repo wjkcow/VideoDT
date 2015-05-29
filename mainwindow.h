@@ -49,6 +49,14 @@ private slots:
 
     void on_addTracker_clicked();
 
+    void on_candidateTaskView_clicked(const QModelIndex &index);
+
+    void on_teJumpToButton_clicked();
+
+    void on_teTrackerStart_clicked();
+
+    void on_teTrackerEnd_clicked();
+
 private:
     Ui::MainWindow *ui;
     void set_up_scene_split();

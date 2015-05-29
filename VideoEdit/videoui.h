@@ -7,9 +7,11 @@
 #include <QPaintEvent>
 #include <QRect>
 #include <QPointF>
-
+#include <QPair>
 #include <QString>
+#include <vector>
 #include <opencv2/opencv.hpp>
+class Frame;
 class VideoUI : public QWidget
 {
     Q_OBJECT
@@ -19,6 +21,7 @@ class VideoUI : public QWidget
     QRect   draw_rect;
     bool   drawable = false;
     bool   draw_started = false;
+    std::vector<QPair<QColor, QRect>>  rects;
     VideoUI(VideoUI&&) = delete;
     VideoUI(const VideoUI&) = delete;
     VideoUI & operator=(VideoUI&&) = delete;
@@ -28,11 +31,14 @@ class VideoUI : public QWidget
     void mousePressEvent(QMouseEvent* event) override;
     void mouseMoveEvent(QMouseEvent* event) override;
     void mouseReleaseEvent(QMouseEvent* event) override;
+
 public:
     VideoUI(QWidget* place, QWidget * parent, bool drawable_ = false);
     VideoUI(QWidget* parent = 0);
+    void show_frame(Frame* frame, std::vector<QPair<QColor, QRect>> rects);
+
 public slots:
-    void show_frame(cv::Mat* frame);
+    void show_frame(Frame* frame);
     void start_draw_rect(const QColor);
 signals:
     void rect_drawed(const QRect& rect);

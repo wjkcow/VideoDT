@@ -8,6 +8,7 @@
 #include "VideoEdit/videocapture.h"
 #include "Dectector/TTaskManager.h"
 
+class Frame;
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
@@ -17,6 +18,7 @@ MainWindow::MainWindow(QWidget *parent) :
     log("Please select file");
     dss = new DecodeSplitStage(this);
     scene_video_ui= new VideoUI(ui->videoUI, this);
+    task_video_ui = new VideoUI(ui->taskEditVideoUI, this);
     ui->videoUI = scene_video_ui;
     set_up_scene_split();
     ui->rightPanel->setEnabled(false);
@@ -51,8 +53,8 @@ void MainWindow::set_up_scene_edit(){
     vcap = new VideoCapture(scene_video_ui->width(), scene_video_ui->height());
     captureThread.start();
     vcap->moveToThread(&captureThread);
-    scene_video_ui->connect(vcap, SIGNAL(frame_ready(cv::Mat*)),
-                           SLOT(show_frame(cv::Mat*)));
+    scene_video_ui->connect(vcap, SIGNAL(frame_ready(Frame*)),
+                           SLOT(show_frame(Frame*)));
   //  vcap->load("/Users/wjkcow/Desktop/Fiesta.mp4");
      vcap->load(dss->get_input_file());
     connect(ui->playButton, SIGNAL(clicked()), vcap, SLOT(play()));
@@ -169,8 +171,18 @@ void MainWindow::on_nextStepButton_clicked()
 }
 
 void MainWindow::set_up_tracking_task(){
-    ttask_manager = new TTaskManager(ds_result);
-    ttask_manager->set_list_view(ui->candidateTaskView);
+    ttask_manager = new TTaskManager(ds_result, task_video_ui);
+    ttask_manager->set_ctask_list_view(ui->candidateTaskView);
+    ttask_manager->set_task_list_view(ui->taskListView);
+    QMetaObject::invokeMethod(vcap, "resize", Q_ARG(QSize,task_video_ui->size()));
+
+    QMetaObject::invokeMethod(vcap, "jump_to_frame", Q_ARG(int,0));
+    ttask_manager->connect(vcap, SIGNAL(frame_ready(Frame*)),
+                           SLOT(draw_frame_with_rect(Frame*)));
+    connect(ui->tePlayButton, SIGNAL(clicked()), vcap, SLOT(play()));
+    connect(ui->tePauseButton, SIGNAL(clicked()), vcap, SLOT(pause()));
+    connect(ui->teNextFrame, SIGNAL(clicked()), vcap, SLOT(next_frame()));
+    connect(ui->tePreFrame, SIGNAL(clicked()), vcap, SLOT(pre_frame()));
 }
 void MainWindow::fake_page_2(){
     ds_result = new DecodeSplitResult(dss->video_info,std::vector<int>{0,27,52,76,129,155,189,260,389,422,460,516,585,628,698,724,734,738,759});
@@ -179,9 +191,37 @@ void MainWindow::fake_page_2(){
 
     }
     ui->nextStepButton->setEnabled(true);
+    vcap = new VideoCapture(scene_video_ui->width(), scene_video_ui->height());
+    captureThread.start();
+    vcap->moveToThread(&captureThread);
+
+    vcap->load("/Users/wjkcow/Desktop/Fiesta.mp4");
 }
 
 void MainWindow::on_addTracker_clicked()
 {
    ttask_manager->add_tracker(ui->trackerType->currentText(), ui->trackerName->toPlainText());
+}
+
+void MainWindow::on_candidateTaskView_clicked(const QModelIndex &index)
+{
+
+}
+
+void MainWindow::on_teJumpToButton_clicked()
+{
+    if(ui->teToFrame->value() > 1864){//ds_result->get_total_frame()){
+        ui->teToFrame->setValue(0);
+    }
+    QMetaObject::invokeMethod(vcap, "jump_to_frame", Q_ARG(int ,ui->teToFrame->value()));
+}
+
+void MainWindow::on_teTrackerStart_clicked()
+{
+
+}
+
+void MainWindow::on_teTrackerEnd_clicked()
+{
+
 }

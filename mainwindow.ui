@@ -86,7 +86,7 @@
      </rect>
     </property>
     <property name="currentIndex">
-     <number>1</number>
+     <number>2</number>
     </property>
     <widget class="QWidget" name="fileload">
      <widget class="QListView" name="listView_5">
@@ -678,16 +678,6 @@ p, li { white-space: pre-wrap; }
      </widget>
     </widget>
     <widget class="QWidget" name="result">
-     <widget class="QGraphicsView" name="graphicsView_2">
-      <property name="geometry">
-       <rect>
-        <x>180</x>
-        <y>70</y>
-        <width>640</width>
-        <height>360</height>
-       </rect>
-      </property>
-     </widget>
      <widget class="Line" name="line_4">
       <property name="geometry">
        <rect>
@@ -701,7 +691,7 @@ p, li { white-space: pre-wrap; }
        <enum>Qt::Vertical</enum>
       </property>
      </widget>
-     <widget class="QPushButton" name="pushButton_19">
+     <widget class="QPushButton" name="teAddTracker">
       <property name="geometry">
        <rect>
         <x>640</x>
@@ -712,16 +702,6 @@ p, li { white-space: pre-wrap; }
       </property>
       <property name="text">
        <string>Add Tracking Job</string>
-      </property>
-     </widget>
-     <widget class="QListView" name="listView_4">
-      <property name="geometry">
-       <rect>
-        <x>840</x>
-        <y>30</y>
-        <width>141</width>
-        <height>331</height>
-       </rect>
       </property>
      </widget>
      <widget class="Line" name="line_5">
@@ -737,7 +717,7 @@ p, li { white-space: pre-wrap; }
        <enum>Qt::Vertical</enum>
       </property>
      </widget>
-     <widget class="QPushButton" name="pushButton_20">
+     <widget class="QPushButton" name="teRemoveTask">
       <property name="geometry">
        <rect>
         <x>840</x>
@@ -787,14 +767,18 @@ p, li { white-space: pre-wrap; }
       </property>
       <layout class="QHBoxLayout" name="horizontalLayout_5">
        <item>
-        <widget class="QPushButton" name="pushButton_26">
+        <widget class="QPushButton" name="teJumpToButton">
          <property name="text">
           <string>Jump To Frame</string>
          </property>
         </widget>
        </item>
        <item>
-        <widget class="QSpinBox" name="spinBox_7"/>
+        <widget class="QSpinBox" name="teToFrame">
+         <property name="maximum">
+          <number>1000000</number>
+         </property>
+        </widget>
        </item>
       </layout>
      </widget>
@@ -809,56 +793,56 @@ p, li { white-space: pre-wrap; }
       </property>
       <layout class="QGridLayout" name="gridLayout_2">
        <item row="0" column="0">
-        <widget class="QPushButton" name="pushButton_28">
+        <widget class="QPushButton" name="tePlayButton">
          <property name="text">
           <string>Play</string>
          </property>
         </widget>
        </item>
        <item row="0" column="2">
-        <widget class="QPushButton" name="pushButton_29">
+        <widget class="QPushButton" name="tePreFrame">
          <property name="text">
           <string>Pre Frame</string>
          </property>
         </widget>
        </item>
        <item row="1" column="0">
-        <widget class="QPushButton" name="pushButton_30">
+        <widget class="QPushButton" name="tePauseButton">
          <property name="text">
           <string>Stop</string>
          </property>
         </widget>
        </item>
        <item row="1" column="1">
-        <widget class="QPushButton" name="pushButton_31">
+        <widget class="QPushButton" name="teTrackerEnd">
          <property name="text">
           <string>Tracker End</string>
          </property>
         </widget>
        </item>
        <item row="1" column="2">
-        <widget class="QPushButton" name="pushButton_32">
+        <widget class="QPushButton" name="teNextFrame">
          <property name="text">
           <string>Next Frame</string>
          </property>
         </widget>
        </item>
        <item row="0" column="1">
-        <widget class="QPushButton" name="pushButton_27">
+        <widget class="QPushButton" name="teTrackerStart">
          <property name="text">
           <string>Tracker Start</string>
          </property>
         </widget>
        </item>
        <item row="0" column="3">
-        <widget class="QPushButton" name="pushButton">
+        <widget class="QPushButton" name="teEditTracker">
          <property name="text">
           <string>Edit Tracker</string>
          </property>
         </widget>
        </item>
        <item row="1" column="3">
-        <widget class="QPushButton" name="pushButton_2">
+        <widget class="QPushButton" name="teSetEnd">
          <property name="text">
           <string>Set As End</string>
          </property>
@@ -965,7 +949,7 @@ p, li { white-space: pre-wrap; }
        <string>To:</string>
       </property>
      </widget>
-     <widget class="QLabel" name="label_12">
+     <widget class="QLabel" name="teFrom">
       <property name="geometry">
        <rect>
         <x>720</x>
@@ -978,7 +962,7 @@ p, li { white-space: pre-wrap; }
        <string>0</string>
       </property>
      </widget>
-     <widget class="QLabel" name="label_13">
+     <widget class="QLabel" name="teTo">
       <property name="geometry">
        <rect>
         <x>720</x>
@@ -1011,6 +995,26 @@ p, li { white-space: pre-wrap; }
         <y>150</y>
         <width>141</width>
         <height>361</height>
+       </rect>
+      </property>
+     </widget>
+     <widget class="QWidget" name="taskEditVideoUI" native="true">
+      <property name="geometry">
+       <rect>
+        <x>180</x>
+        <y>70</y>
+        <width>640</width>
+        <height>360</height>
+       </rect>
+      </property>
+     </widget>
+     <widget class="QListWidget" name="taskListView">
+      <property name="geometry">
+       <rect>
+        <x>840</x>
+        <y>50</y>
+        <width>141</width>
+        <height>321</height>
        </rect>
       </property>
      </widget>

@@ -9,7 +9,7 @@
 #include <string>
 
 //Q_DECLARE_METATYPE(cv::Mat);
-
+class Frame;
 class VideoCapture : public QObject
 {
     Q_OBJECT
@@ -36,7 +36,7 @@ public slots:
     }
 
 signals:
-    void frame_ready(cv::Mat *frame);
+    void frame_ready(Frame *frame);
     void new_frame_fired(int frame_n);
     void fail_open_file();
 

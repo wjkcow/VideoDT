@@ -5,6 +5,8 @@
 #include <iostream>
 #include <QDebug>
 #include <QPixmap>
+#include <DecodeSplit/DSPipeline/FrameTypes.h>
+
 VideoUI::VideoUI(QWidget* place, QWidget * parent, bool drawable_):VideoUI(place->parentWidget()){
     move(place->pos());
     setFixedWidth(place->width());
@@ -31,6 +33,10 @@ void VideoUI::paintEvent(QPaintEvent *){
 
         if(drawable){
             p.drawRect(draw_rect);
+        }
+        for(int i = 0; i < rects.size(); i++){
+            p.setPen(rects[i].first);
+            p.drawRect(rects[i].second);
         }
     }
 
@@ -67,10 +73,22 @@ void VideoUI::mouseReleaseEvent(QMouseEvent* event){
     }
 }
 
-void VideoUI::show_frame(cv::Mat* frame){
+void VideoUI::show_frame(Frame* frame){
  //   QImage img(frame->data, frame->cols, frame->rows, frame->step,
  //                                      QImage::Format_RGB888);
+    rects.clear();
+    draw_rect.setCoords(0,0,0,0);
+    delete m_frame;
+    m_frame = frame;
+    qDebug() << "show_frame";
+  //  repaint();
+    update();
+}
 
+void VideoUI::show_frame(Frame* frame, std::vector<QPair<QColor, QRect>> rects_){
+ //   QImage img(frame->data, frame->cols, frame->rows, frame->step,
+ //                                      QImage::Format_RGB888);
+    rects = rects_;
     draw_rect.setCoords(0,0,0,0);
     delete m_frame;
     m_frame = frame;
