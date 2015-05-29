@@ -123,7 +123,7 @@ void TTaskManager::rect_drawed(const QRect& rect){
         width =  double(width) * video_info->compress_x / vui->width();
         height = double(height) * video_info->compress_y / vui->height();
         task.rect = QRect(x,y,width, height);
-      //  qDebug() << "new rect " << task.rect ;
+        qDebug() << "new rect set to task " << task.rect ;
     }
     window->te_draw_end();
 }

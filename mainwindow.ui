@@ -48,34 +48,6 @@
      </rect>
     </property>
    </widget>
-   <widget class="QPushButton" name="nextStepButton">
-    <property name="enabled">
-     <bool>false</bool>
-    </property>
-    <property name="geometry">
-     <rect>
-      <x>870</x>
-      <y>540</y>
-      <width>115</width>
-      <height>32</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Next Step</string>
-    </property>
-    <property name="checkable">
-     <bool>false</bool>
-    </property>
-    <property name="autoDefault">
-     <bool>false</bool>
-    </property>
-    <property name="default">
-     <bool>false</bool>
-    </property>
-    <property name="flat">
-     <bool>false</bool>
-    </property>
-   </widget>
    <widget class="QStackedWidget" name="stackedWidget">
     <property name="geometry">
      <rect>
@@ -86,7 +58,7 @@
      </rect>
     </property>
     <property name="currentIndex">
-     <number>1</number>
+     <number>0</number>
     </property>
     <widget class="QWidget" name="fileload">
      <widget class="QGraphicsView" name="graphicsView_3">
@@ -99,7 +71,7 @@
        </rect>
       </property>
      </widget>
-     <widget class="QWidget" name="widget" native="true">
+     <widget class="QWidget" name="rtDown" native="true">
       <property name="geometry">
        <rect>
         <x>210</x>
@@ -203,7 +175,7 @@
        </property>
       </widget>
      </widget>
-     <widget class="QWidget" name="widget_2" native="true">
+     <widget class="QWidget" name="rtUp" native="true">
       <property name="geometry">
        <rect>
         <x>220</x>
@@ -235,7 +207,7 @@
        </layout>
       </widget>
      </widget>
-     <widget class="QWidget" name="widget_3" native="true">
+     <widget class="QWidget" name="rtLeft" native="true">
       <property name="geometry">
        <rect>
         <x>0</x>
@@ -698,7 +670,7 @@ p, li { white-space: pre-wrap; }
        <property name="geometry">
         <rect>
          <x>390</x>
-         <y>470</y>
+         <y>450</y>
          <width>81</width>
          <height>32</height>
         </rect>
@@ -715,6 +687,34 @@ p, li { white-space: pre-wrap; }
          <width>131</width>
          <height>421</height>
         </rect>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="nextStepButton">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
+       <property name="geometry">
+        <rect>
+         <x>350</x>
+         <y>490</y>
+         <width>115</width>
+         <height>32</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Next Step</string>
+       </property>
+       <property name="checkable">
+        <bool>false</bool>
+       </property>
+       <property name="autoDefault">
+        <bool>false</bool>
+       </property>
+       <property name="default">
+        <bool>false</bool>
+       </property>
+       <property name="flat">
+        <bool>false</bool>
        </property>
       </widget>
      </widget>
@@ -934,7 +934,7 @@ p, li { white-space: pre-wrap; }
         <string>Tracking algorithm</string>
        </property>
       </widget>
-      <widget class="QPushButton" name="pushButton_24">
+      <widget class="QPushButton" name="startTracking">
        <property name="geometry">
         <rect>
          <x>10</x>
@@ -1129,22 +1129,6 @@ p, li { white-space: pre-wrap; }
     </property>
     <property name="orientation">
      <enum>Qt::Horizontal</enum>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="pushButton_5">
-    <property name="enabled">
-     <bool>false</bool>
-    </property>
-    <property name="geometry">
-     <rect>
-      <x>730</x>
-      <y>540</y>
-      <width>115</width>
-      <height>32</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Previouse Step</string>
     </property>
    </widget>
   </widget>

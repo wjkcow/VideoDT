@@ -20,7 +20,7 @@ class VideoUI : public QWidget
     QPointF rect_start_point;
     QRect   draw_rect;
     QColor draw_color;
-    bool   drawable = false;
+    bool   show_draw_rect = false;
     bool   draw_started = false;
     std::vector<QPair<QColor, QRect>>  rects;
     VideoUI(VideoUI&&) = delete;
