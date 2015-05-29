@@ -59,12 +59,19 @@ void TTaskManager::update_task_list_view(){
 
 void TTaskManager::draw_frame_with_rect(Frame* frame){
     std::vector<QPair<QColor, QRect>> rects;
-    rects.push_back(QPair<QColor,QRect>(Qt::green, QRect(10,10,50,50)));
-    if(frame->seq == 0){
-        vui->show_frame(frame, rects);
-    } else {
-        vui->show_frame(frame);
+ //   rects.push_back(QPair<QColor,QRect>(Qt::green, QRect(10,10,50,50)));
+
+    if(selected_ctask_idx >= 0 && selected_ctask_idx < candidate_tasks.size()){
+        TrackingTask& task = candidate_tasks[selected_ctask_idx];
+        if(frame->seq == task.from_frame && !task.need_edit){
+            rects.push_back(QPair<QColor,QRect>(task.tracker->color, task.rect));
+            vui->show_frame(frame, rects);
+            return;
+        }
     }
+
+    vui->show_frame(frame);
+
 }
 
 void TTaskManager::select_ctracking_task(const QString& str){
@@ -104,6 +111,20 @@ void TTaskManager::edit_selected(){
 }
 void TTaskManager::rect_drawed(const QRect& rect){
     qDebug() << "rect received";
+    if(selected_ctask_idx >= 0 && selected_ctask_idx < candidate_tasks.size()){
+        TrackingTask& task = candidate_tasks[selected_ctask_idx];
+        task.need_edit = false;
+        int x,y,height, width;
+        rect.getRect(&x,&y,&width,&height);
+       // qDebug() << "new rect " << rect ;
+        // x width
+        x = double(x) * video_info->compress_x / vui->width();
+        y = double(y) * video_info->compress_y / vui->height();
+        width =  double(width) * video_info->compress_x / vui->width();
+        height = double(height) * video_info->compress_y / vui->height();
+        task.rect = QRect(x,y,width, height);
+      //  qDebug() << "new rect " << task.rect ;
+    }
     window->te_draw_end();
 }
 void TTaskManager::set_end_frame_to_selected(){
@@ -117,6 +138,12 @@ void TTaskManager::set_end_frame_to_selected(){
 void TTaskManager::add_to_task(){
     if(selected_ctask_idx >= 0 && selected_ctask_idx < candidate_tasks.size()){
         TrackingTask& task = candidate_tasks[selected_ctask_idx];
+        if(task.need_edit){
+            QMessageBox msgBox;
+            msgBox.setText("You must edit this task");
+            msgBox.exec();
+            return;
+        }
         tasks.push_back(task);
         update_task_list_view();
     }

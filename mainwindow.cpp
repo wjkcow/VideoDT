@@ -264,7 +264,3 @@ void MainWindow::on_teSetEnd_clicked()
     ui->teTo->setText(QString::number(ui->teToFrame->value()));
 }
 
-void MainWindow::on_taskListView_activated(const QModelIndex &index)
-{
-
-}

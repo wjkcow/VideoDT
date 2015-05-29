@@ -63,8 +63,6 @@ private slots:
 
     void on_teSetEnd_clicked();
 
-    void on_taskListView_activated(const QModelIndex &index);
-
 private:
     Ui::MainWindow *ui;
     void set_up_scene_split();
