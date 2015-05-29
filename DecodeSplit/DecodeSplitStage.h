@@ -16,12 +16,11 @@ class DecodeSplitStage : public QObject
     Q_OBJECT
 public:
     DecodeSplitStage(MainWindow* window_);
-    QString get_input_file(){return input_file;}
+    QString get_input_file(){return video_info->input_file;}
     int get_total_frame_n(){return video_info->total_frame_n;}
 
-    void set_video_file(const QString& input_file_){input_file = input_file_;}
+    void set_video_file(const QString& input_file_){video_info->input_file = input_file_;}
     void set_tmp_path(const QString& tmp_path_){video_info->tmp_path = tmp_path_;}
-    void set_output_file(const QString& output_file_){video_info->output_file = output_file_;}
 
 signals:
     void handle_result(DecodeSplitResult* result);
@@ -57,7 +56,6 @@ public slots:
     }
 private:
     void run_thread();
-    QString input_file;
     QString algorithm = "hist";
     QString method = "Correlation";
     double threshold = 0.8;

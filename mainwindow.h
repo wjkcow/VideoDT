@@ -30,7 +30,7 @@ private slots:
 
     void on_tmpFilePathButton_clicked();
 
-    void on_outputPathButton_clicked();
+//    void on_outputPathButton_clicked();
 
     void on_jumpToFrame_clicked();
 

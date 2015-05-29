@@ -103,19 +103,19 @@ void MainWindow::on_tmpFilePathButton_clicked()
     }
 }
 
-void MainWindow::on_outputPathButton_clicked()
-{
-    QString outputPath = QFileDialog::getSaveFileName(this,tr("Select output file path"));
-    if(outputPath.size() == 0){
-        log("Error: No file selected");
-    } else {
-        log("file selected " + outputPath );
+//void MainWindow::on_outputPathButton_clicked()
+//{
+//    QString outputPath = QFileDialog::getSaveFileName(this,tr("Select output file path"));
+//    if(outputPath.size() == 0){
+//        log("Error: No file selected");
+//    } else {
+//        log("file selected " + outputPath );
 
-        ui->outputPathText->clear();
-        ui->outputPathText->append(outputPath);
-        dss->set_output_file(outputPath);
-    }
-}
+//        ui->outputPathText->clear();
+//        ui->outputPathText->append(outputPath);
+//        dss->set_output_file(outputPath);
+//    }
+//}
 
 
 void MainWindow::on_jumpToFrame_clicked()

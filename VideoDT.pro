@@ -26,7 +26,12 @@ SOURCES += main.cpp\
     DecodeSplit/DSPipeline/WriterFilter.cpp \
     VideoEdit/videocapture.cpp \
     VideoEdit/videoui.cpp \
-    DecodeSplit/DSPipeline/CompressFilter.cpp
+    DecodeSplit/DSPipeline/CompressFilter.cpp \
+    Dectector/Dectector.cpp \
+    Dectector/Tracker.cpp \
+    Dectector/TrackingTask.cpp \
+    Dectector/TTaskManager.cpp \
+    FrameLibrary.cpp
 
 HEADERS  += \
     mainwindow.h \
@@ -43,7 +48,12 @@ HEADERS  += \
     DecodeSplit/DSPipeline/WriterFilter.h \
     VideoEdit/videocapture.h \
     VideoEdit/videoui.h \
-    DecodeSplit/DSPipeline/CompressFilter.h
+    DecodeSplit/DSPipeline/CompressFilter.h \
+    Dectector/Dectector.h \
+    Dectector/Tracker.h \
+    Dectector/TrackingTask.h \
+    Dectector/TTaskManager.h \
+    FrameLibrary.h
 
 FORMS    += \
     mainwindow.ui

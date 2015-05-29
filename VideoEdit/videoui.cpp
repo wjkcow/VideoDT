@@ -22,7 +22,7 @@ void VideoUI::paintEvent(QPaintEvent *){
     if(m_frame){
         QImage img(m_frame->data, m_frame->cols, m_frame->rows, m_frame->step,
                                QImage::Format_RGB888);
-        qDebug() << "paint_Event";
+//        qDebug() << "paint_Event";
         QPainter p(this);
 
         p.eraseRect(0,0,img.width(), img.height());

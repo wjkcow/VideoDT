@@ -51,8 +51,6 @@ public:
     int get_scene_end(){
         return selected.to_frame;
     }
-
-
 public slots:
     void set_current_frame(int n);
     void set_scence_start();

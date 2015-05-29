@@ -14,8 +14,7 @@ DecodeSplitStage::DecodeSplitStage(MainWindow* window_): window(window_){
 }
 
 void DecodeSplitStage::run(){
-    if(!input_file.size() || !video_info->tmp_path.size()
-            || !video_info->output_file.size()){
+    if(!video_info->input_file.size() || !video_info->tmp_path.size()){
         window->log("Error: please set files and paths");
         return;
     } else {
@@ -30,7 +29,7 @@ void DecodeSplitStage::run(){
 
 
 void DecodeSplitStage::run_thread(){
-    DSPipeline pipeline(input_file.toStdString(),
+    DSPipeline pipeline(video_info->input_file.toStdString(),
                         (video_info->tmp_path + video_info->tmp_file_fmt).toStdString(),
                         algorithm.toStdString(),
                         method.toStdString(),
