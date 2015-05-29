@@ -1,6 +1,7 @@
 #ifndef TRACKING_TASK
 #define TRACKING_TASK
 #include <QRect>
+#include <QString>
 #include "types.h"
 
 class Tracker;
@@ -14,6 +15,7 @@ public:
         tracker(tracker_), VideoSection(from, to), rect(rect_), need_edit(need_edit_){
     }
 
+    QString to_qstring();
     void change_start_frame(QRect rect_, int from_frame_){
         from_frame = from_frame_;
         rect = rect_;

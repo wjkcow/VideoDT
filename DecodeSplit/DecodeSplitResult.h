@@ -60,11 +60,12 @@ public slots:
 private:
     void update_list_view();
     std::vector<VideoSection> data_;
-    VideoInfo* video_info;
     VideoSection selected;
     int current_frame = 0;
     VideoSection new_section_to_add;
     QListWidget* list_view;
+public:
+    VideoInfo* video_info;
 };
 
 #endif // DECODESPLITRESULT_H

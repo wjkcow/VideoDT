@@ -6,6 +6,8 @@
 #include "DecodeSplit/DecodeSplitResult.h"
 #include "VideoEdit/videoui.h"
 #include "VideoEdit/videocapture.h"
+#include "Dectector/TTaskManager.h"
+
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
@@ -18,6 +20,8 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->videoUI = scene_video_ui;
     set_up_scene_split();
     ui->rightPanel->setEnabled(false);
+    fake_page_2();
+
 }
 
 MainWindow::~MainWindow()
@@ -64,6 +68,7 @@ void MainWindow::set_up_scene_edit(){
 
 void MainWindow::scene_split_done(DecodeSplitResult* result_){
     ui->rightPanel->setEnabled(true);
+    ui->nextFrameButton->setEnabled(true);
     ds_result = result_;
     set_up_scene_edit();
     ds_result->set_list_view(ui->sceneList);
@@ -124,8 +129,6 @@ void MainWindow::on_jumpToFrame_clicked()
         ui->toFrame->setValue(0);
     }
     QMetaObject::invokeMethod(vcap, "jump_to_frame", Q_ARG(int ,ui->toFrame->value()));
-
-
 }
 
 void MainWindow::on_sceneStartButton_clicked()
@@ -156,3 +159,29 @@ void MainWindow::on_setEndButton_clicked()
     ui->newToFrame->setText(QString::number(ui->toFrame->value()));
 }
 
+
+void MainWindow::on_nextStepButton_clicked()
+{
+    if(!ttask_manager){
+        set_up_tracking_task();
+        ui->stackedWidget->setCurrentIndex(2);
+    }
+}
+
+void MainWindow::set_up_tracking_task(){
+    ttask_manager = new TTaskManager(ds_result);
+    ttask_manager->set_list_view(ui->candidateTaskView);
+}
+void MainWindow::fake_page_2(){
+    ds_result = new DecodeSplitResult(dss->video_info,std::vector<int>{0,27,52,76,129,155,189,260,389,422,460,516,585,628,698,724,734,738,759});
+    if(!ds_result){
+        qDebug() << "fake fail";
+
+    }
+    ui->nextStepButton->setEnabled(true);
+}
+
+void MainWindow::on_addTracker_clicked()
+{
+   ttask_manager->add_tracker(ui->trackerType->currentText(), ui->trackerName->toPlainText());
+}

@@ -59,8 +59,9 @@ private:
     QString algorithm = "hist";
     QString method = "Correlation";
     double threshold = 0.8;
-
+public:
     VideoInfo* video_info;
+private:
     DecodeSplitResult* result;
     MainWindow* window;
     QFuture<void> m_future;

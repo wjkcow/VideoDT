@@ -19,7 +19,7 @@ public:
 
 private:
     static Detector* factory(const std::string& type);
-    virtual bool detect(cv::Mat&& frame, QRect& rect) = 0;
+    virtual bool detect(cv::Mat& frame, QRect& rect) = 0;
     virtual bool need_edit() = 0;
 };
 

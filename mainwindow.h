@@ -8,6 +8,7 @@ class DecodeSplitStage;
 class DecodeSplitResult;
 class VideoUI;
 class VideoCapture;
+class TTaskManager;
 
 namespace Ui {
 class MainWindow;
@@ -44,10 +45,16 @@ private slots:
 
     void on_setEndButton_clicked();
 
+    void on_nextStepButton_clicked();
+
+    void on_addTracker_clicked();
+
 private:
     Ui::MainWindow *ui;
     void set_up_scene_split();
     void set_up_scene_edit();
+    void set_up_tracking_task();
+    void fake_page_2();
     DecodeSplitStage *dss;
     DecodeSplitResult *ds_result;
     QThread captureThread;
@@ -55,7 +62,7 @@ private:
     VideoUI* scene_video_ui;
     VideoUI* task_video_ui;
     VideoUI* result_video_ui;
-
+    TTaskManager* ttask_manager = nullptr;
 };
 
 #endif // MAINWINDOW_H

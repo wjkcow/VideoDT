@@ -701,16 +701,6 @@ p, li { white-space: pre-wrap; }
        <enum>Qt::Vertical</enum>
       </property>
      </widget>
-     <widget class="QListView" name="listView_3">
-      <property name="geometry">
-       <rect>
-        <x>20</x>
-        <y>130</y>
-        <width>131</width>
-        <height>391</height>
-       </rect>
-      </property>
-     </widget>
      <widget class="QPushButton" name="pushButton_19">
       <property name="geometry">
        <rect>
@@ -876,11 +866,11 @@ p, li { white-space: pre-wrap; }
        </item>
       </layout>
      </widget>
-     <widget class="QTextBrowser" name="textBrowser">
+     <widget class="QTextBrowser" name="trackerName">
       <property name="geometry">
        <rect>
         <x>60</x>
-        <y>50</y>
+        <y>30</y>
         <width>100</width>
         <height>25</height>
        </rect>
@@ -895,11 +885,11 @@ p, li { white-space: pre-wrap; }
        <bool>false</bool>
       </property>
      </widget>
-     <widget class="QComboBox" name="comboBox">
+     <widget class="QComboBox" name="trackerType">
       <property name="geometry">
        <rect>
         <x>60</x>
-        <y>90</y>
+        <y>70</y>
         <width>104</width>
         <height>26</height>
        </rect>
@@ -913,8 +903,8 @@ p, li { white-space: pre-wrap; }
      <widget class="QLabel" name="label">
       <property name="geometry">
        <rect>
-        <x>20</x>
-        <y>20</y>
+        <x>10</x>
+        <y>10</y>
         <width>59</width>
         <height>16</height>
        </rect>
@@ -927,7 +917,7 @@ p, li { white-space: pre-wrap; }
       <property name="geometry">
        <rect>
         <x>10</x>
-        <y>50</y>
+        <y>30</y>
         <width>59</width>
         <height>16</height>
        </rect>
@@ -940,7 +930,7 @@ p, li { white-space: pre-wrap; }
       <property name="geometry">
        <rect>
         <x>10</x>
-        <y>90</y>
+        <y>70</y>
         <width>59</width>
         <height>16</height>
        </rect>
@@ -999,6 +989,29 @@ p, li { white-space: pre-wrap; }
       </property>
       <property name="text">
        <string>0</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="addTracker">
+      <property name="geometry">
+       <rect>
+        <x>20</x>
+        <y>110</y>
+        <width>115</width>
+        <height>32</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>add</string>
+      </property>
+     </widget>
+     <widget class="QListWidget" name="candidateTaskView">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>150</y>
+        <width>141</width>
+        <height>361</height>
+       </rect>
       </property>
      </widget>
     </widget>
