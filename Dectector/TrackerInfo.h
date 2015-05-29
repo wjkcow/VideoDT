@@ -1,5 +1,5 @@
-#ifndef TRACKER_H
-#define TRACKER_H
+#ifndef TRACKER_INFO_H
+#define TRACKER_INFO_H
 
 #include <QString>
 #include <vector>
@@ -8,9 +8,9 @@
 class TrackingTask;
 class Dectector;
 
-class Tracker{  
+class TrackerInfo{
 public:
-    Tracker(const QString& name_, QColor color_);
+    TrackerInfo(const QString& name_, QColor color_);
     QString name;
     QColor color;
 };

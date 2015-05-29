@@ -20,7 +20,7 @@ Detector* Detector::factory(const std::string& type){
 std::vector<TrackingTask> Detector::generate_task(const std::string& type,
                                                    FrameLibrary& flib,
                                                    const std::vector<VideoSection>& sections,
-                                                    Tracker* tracker){
+                                                    TrackerInfo* tracker){
     Detector* detector = factory(type);
     vector<TrackingTask> ret;
     cv::Mat frame;

@@ -1,6 +1,6 @@
-#include "Tracker.h"
+#include "TrackerInfo.h"
 #include "Dectector/Dectector.h"
 
-Tracker::Tracker(const QString& name_,
+TrackerInfo::TrackerInfo(const QString& name_,
                  QColor color_): name{name_}, color{color_}{
 }

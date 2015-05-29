@@ -10,7 +10,7 @@
 #include "DecodeSplit/DecodeSplitResult.h"
 #include "Dectector/Dectector.h"
 #include "Dectector/TrackingTask.h"
-class Tracker;
+class TrackerInfo;
 class Frame;
 class VideoUI;
 class TTaskManager : public QObject{
@@ -49,7 +49,7 @@ private:
 
     VideoInfo* video_info;
     VideoUI* vui;
-    QHash<QString, Tracker*> trackers_name;
+    QHash<QString, TrackerInfo*> trackers_name;
     int selected_ctask_idx = -1;
 
 

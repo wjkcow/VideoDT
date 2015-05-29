@@ -1,6 +1,6 @@
 #include "TTaskManager.h"
 #include "Dectector/Dectector.h"
-#include "Dectector/Tracker.h"
+#include "Dectector/TrackerInfo.h"
 #include "FrameLibrary.h"
 #include <vector>
 #include <QColor>
@@ -16,7 +16,7 @@ int    color_set_size = 6;
 void TTaskManager::add_tracker(const QString& dectector_type,
                   const QString& tracker_name){
 
-    Tracker* new_tracker = new Tracker(tracker_name, color_set[color_cur_idx]);
+    TrackerInfo* new_tracker = new TrackerInfo(tracker_name, color_set[color_cur_idx]);
 
 //    qDebug() << (video_info->tmp_path + video_info->tmp_file_fmt) ;
     if(!tracker_name.size() || trackers_name.count(tracker_name)){

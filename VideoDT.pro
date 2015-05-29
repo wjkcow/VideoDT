@@ -28,10 +28,20 @@ SOURCES += main.cpp\
     VideoEdit/videoui.cpp \
     DecodeSplit/DSPipeline/CompressFilter.cpp \
     Dectector/Dectector.cpp \
-    Dectector/Tracker.cpp \
     Dectector/TrackingTask.cpp \
     Dectector/TTaskManager.cpp \
-    FrameLibrary.cpp
+    FrameLibrary.cpp \
+    Tracking/Tracking.cpp \
+    Tracking/TrackingResult.cpp \
+    Tracking/CppMT/CMT.cpp \
+    Tracking/CppMT/common.cpp \
+    Tracking/CppMT/Consensus.cpp \
+    Tracking/CppMT/Fusion.cpp \
+    Tracking/CppMT/gui.cpp \
+    Tracking/CppMT/Matcher.cpp \
+    Tracking/CppMT/Tracker.cpp \
+    Tracking/CppMT/fastcluster/fastcluster.cpp \
+    Dectector/TrackerInfo.cpp
 
 HEADERS  += \
     mainwindow.h \
@@ -50,10 +60,21 @@ HEADERS  += \
     VideoEdit/videoui.h \
     DecodeSplit/DSPipeline/CompressFilter.h \
     Dectector/Dectector.h \
-    Dectector/Tracker.h \
     Dectector/TrackingTask.h \
     Dectector/TTaskManager.h \
-    FrameLibrary.h
+    FrameLibrary.h \
+    Tracking/Tracking.h \
+    Tracking/TrackingResult.h \
+    Tracking/CppMT/CMT.h \
+    Tracking/CppMT/common.h \
+    Tracking/CppMT/Consensus.h \
+    Tracking/CppMT/Fusion.h \
+    Tracking/CppMT/gui.h \
+    Tracking/CppMT/Matcher.h \
+    Tracking/CppMT/Tracker.h \
+    Tracking/CppMT/fastcluster/fastcluster.h \
+    Tracking/CppMT/logging/log.h \
+    Dectector/TrackerInfo.h
 
 FORMS    += \
     mainwindow.ui

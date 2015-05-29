@@ -4,14 +4,14 @@
 #include <QString>
 #include "types.h"
 
-class Tracker;
+class TrackerInfo;
 
 class TrackingTask : public VideoSection{
 public:
-    TrackingTask(VideoSection section,Tracker* tracker_, QRect rect_ = QRect(), bool need_edit_ = true):
+    TrackingTask(VideoSection section,TrackerInfo* tracker_, QRect rect_ = QRect(), bool need_edit_ = true):
         tracker(tracker_), VideoSection(section), rect(rect_), need_edit(need_edit_){
     }
-    TrackingTask(int from, int to, Tracker* tracker_, QRect rect_ = QRect(), bool need_edit_ = true):
+    TrackingTask(int from, int to, TrackerInfo* tracker_, QRect rect_ = QRect(), bool need_edit_ = true):
         tracker(tracker_), VideoSection(from, to), rect(rect_), need_edit(need_edit_){
     }
 
@@ -21,7 +21,7 @@ public:
         rect = rect_;
         need_edit = false;
     }
-    Tracker* tracker;
+    TrackerInfo* tracker;
     QRect rect;
     bool  need_edit;
 };
