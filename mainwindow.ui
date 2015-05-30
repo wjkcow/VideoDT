@@ -58,7 +58,7 @@
      </rect>
     </property>
     <property name="currentIndex">
-     <number>1</number>
+     <number>0</number>
     </property>
     <widget class="QWidget" name="fileload">
      <widget class="QWidget" name="rtDown" native="true">
@@ -192,7 +192,11 @@
          </widget>
         </item>
         <item>
-         <widget class="QSpinBox" name="rtToFrame"/>
+         <widget class="QSpinBox" name="rtToFrame">
+          <property name="maximum">
+           <number>100000</number>
+          </property>
+         </widget>
         </item>
        </layout>
       </widget>

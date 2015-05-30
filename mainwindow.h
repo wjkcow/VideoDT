@@ -78,6 +78,8 @@ private slots:
 
     void on_resultList_clicked(const QModelIndex &index);
 
+    void on_rtJumpToButton_clicked();
+
 private:
     Ui::MainWindow *ui;
     void set_up_scene_split();

@@ -25,7 +25,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->videoUI = scene_video_ui;
     set_up_scene_split();
     ui->rightPanel->setEnabled(false);
-    fake_page_2();
+//    fake_page_2();
 
 }
 
@@ -73,7 +73,9 @@ void MainWindow::set_up_scene_edit(){
 
 void MainWindow::scene_split_done(DecodeSplitResult* result_){
     ui->rightPanel->setEnabled(true);
-    ui->nextFrameButton->setEnabled(true);
+//    ui->nextFrameButton->setEnabled(true);
+    ui->nextStepButton->setEnabled(true);
+
     ds_result = result_;
     set_up_scene_edit();
     ds_result->set_list_view(ui->sceneList);
@@ -207,7 +209,6 @@ void MainWindow::fake_page_2(){
     vcap = new VideoCapture(scene_video_ui->width(), scene_video_ui->height());
     captureThread.start();
     vcap->moveToThread(&captureThread);
-
     vcap->load("/Users/wjkcow/Desktop/Fiesta.mp4");
 }
 
@@ -338,4 +339,12 @@ void MainWindow::rt_draw_end(){
     ui->rtLeft->setEnabled(true);
     ui->rtUp->setEnabled(true);
     ui->rtDown->setEnabled(true);
+}
+
+void MainWindow::on_rtJumpToButton_clicked()
+{
+    if(ui->rtToFrame->value() > ds_result->get_total_frame()){
+        ui->toFrame->setValue(0);
+    }
+    QMetaObject::invokeMethod(vcap, "jump_to_frame", Q_ARG(int ,ui->rtToFrame->value()));
 }

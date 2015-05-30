@@ -50,7 +50,17 @@ void TrackingResult::edit_selected(){
 
 void TrackingResult::rect_drawed(const QRect &rect){
     window->rt_draw_end();
-
+    if(!selected_task){
+        qDebug() << "EEEEEEEEEERRRRRRROR";
+    }
+    qDebug() << "Editing result of frame " << current_frame;
+    int x,y,width,height;
+    rect.getRect(&x,&y,&width,&height);
+    x = double(x) *video_info->compress_x / window->get_result_ui()->width();
+    y = double(y) * video_info->compress_y / window->get_result_ui()->height() ;
+    width =  double(width) * video_info->compress_x / window->get_result_ui()->width();
+    height = double(height) * video_info->compress_y / window->get_result_ui()->height() ;
+    data[current_frame][selected_task->tracker->color.rgb()] = QRect(x,y,width,height);
 }
 
 void TrackingResult::draw_frame_with_rect(Frame* frame){
