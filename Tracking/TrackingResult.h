@@ -11,7 +11,7 @@
 
 class TrackingResult{
 public:
-    void add_result(TrackingTask* task,const std::vector<QRect>& rects);
+    void add_result(TrackingTask* task,QHash<int, QRect> &rects);
     void set_list_view(QListWidget* list_view_){
 
     }
