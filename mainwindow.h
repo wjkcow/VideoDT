@@ -9,7 +9,8 @@ class DecodeSplitResult;
 class VideoUI;
 class VideoCapture;
 class TTaskManager;
-
+class Tracking;
+class TrackingResult;
 namespace Ui {
 class MainWindow;
 }
@@ -28,6 +29,7 @@ public:
     void te_draw_end();
 private slots:
     //void update_frame(int n);
+    void tracking_done();
     void scene_split_done(DecodeSplitResult* result);
     void on_videoFileSelectButton_clicked();
 
@@ -63,6 +65,8 @@ private slots:
 
     void on_teSetEnd_clicked();
 
+    void on_startTracking_clicked();
+
 private:
     Ui::MainWindow *ui;
     void set_up_scene_split();
@@ -77,6 +81,8 @@ private:
     VideoUI* task_video_ui;
     VideoUI* result_video_ui;
     TTaskManager* ttask_manager = nullptr;
+    Tracking* tracking;
+    TrackingResult* t_result;
 };
 
 #endif // MAINWINDOW_H

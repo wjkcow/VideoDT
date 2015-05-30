@@ -7,6 +7,8 @@
 #include "VideoEdit/videoui.h"
 #include "VideoEdit/videocapture.h"
 #include "Dectector/TTaskManager.h"
+#include "Tracking/Tracking.h"
+#include "Tracking/TrackingResult.h"
 
 class Frame;
 MainWindow::MainWindow(QWidget *parent) :
@@ -264,3 +266,22 @@ void MainWindow::on_teSetEnd_clicked()
     ui->teTo->setText(QString::number(ui->teToFrame->value()));
 }
 
+
+void MainWindow::on_startTracking_clicked()
+{
+    log("Tracking is running");
+    tracking = new Tracking(ttask_manager->get_task(), ttask_manager->video_info);
+    connect(tracking, SIGNAL(all_done()), this, SLOT(tracking_done()));
+    tracking->run();
+    ui->teLeft->setEnabled(false);
+    ui->teRight->setEnabled(false);
+    ui->teUp->setEnabled(false);
+    ui->teDown->setEnabled(false);
+}
+
+void MainWindow::tracking_done(){
+    qDebug() << "tracking done";
+    ui->stackedWidget->setCurrentIndex(0);
+    t_result = tracking->get_result();
+    t_result->set_list_view(ui->resultList);
+}

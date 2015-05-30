@@ -28,6 +28,9 @@ public:
     int  get_tracker_end();
     QString get_tracker_name();
     void select_ctracking_task(const QString&);
+    std::vector<TrackingTask> get_task(){
+        return tasks;
+    }
 public slots:
     void set_current_frame(int n){current_frame = n;}
     void draw_frame_with_rect(Frame* frame);

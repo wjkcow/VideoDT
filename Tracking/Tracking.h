@@ -9,7 +9,7 @@
 #include "Tracking/TrackingResult.h"
 #include "Dectector/TrackingTask.h"
 
-class VideoInfo;
+struct VideoInfo;
 class Tracking;
 class TrackingWorker : QObject{
     Q_OBJECT
@@ -37,12 +37,12 @@ private:
 class Tracking : public QObject{
     Q_OBJECT
 public:
-    Tracking(std::vector<TrackingTask>& tasks_, VideoInfo* video_info_){
+    Tracking(const std::vector<TrackingTask>& tasks_, VideoInfo* video_info_){
         tasks = tasks_;
         video_info = video_info_;
         tresult = new TrackingResult;
     }
-    TrackingResult* result(){
+    TrackingResult* get_result(){
         return tresult;
     }
     void run();

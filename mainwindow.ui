@@ -58,7 +58,7 @@
      </rect>
     </property>
     <property name="currentIndex">
-     <number>2</number>
+     <number>0</number>
     </property>
     <widget class="QWidget" name="fileload">
      <widget class="QGraphicsView" name="graphicsView_3">
@@ -216,7 +216,7 @@
         <height>471</height>
        </rect>
       </property>
-      <widget class="QListWidget" name="listWidget">
+      <widget class="QListWidget" name="resultList">
        <property name="geometry">
         <rect>
          <x>10</x>
