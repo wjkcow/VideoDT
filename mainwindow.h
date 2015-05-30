@@ -27,6 +27,11 @@ public:
     void disable_left_panel();
     void te_draw_start();
     void te_draw_end();
+    void rt_draw_start();
+    void rt_draw_end();
+    VideoUI* get_result_ui(){
+        return result_video_ui;
+    }
 private slots:
     //void update_frame(int n);
     void tracking_done();
@@ -67,11 +72,18 @@ private slots:
 
     void on_startTracking_clicked();
 
+    void on_rtTrackerStart_clicked();
+
+    void on_rtTrackerEnd_clicked();
+
+    void on_resultList_clicked(const QModelIndex &index);
+
 private:
     Ui::MainWindow *ui;
     void set_up_scene_split();
     void set_up_scene_edit();
     void set_up_tracking_task();
+    void set_up_final_reslut();
     void fake_page_2();
     DecodeSplitStage *dss;
     DecodeSplitResult *ds_result;

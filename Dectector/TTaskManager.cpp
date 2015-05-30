@@ -66,7 +66,13 @@ void TTaskManager::draw_frame_with_rect(Frame* frame){
         TrackingTask& task = candidate_tasks[selected_ctask_idx];
         if(frame->seq == task.from_frame && !task.need_edit){
      //       rects.push_back(QPair<QColor,QRect>(task.tracker->color, task.rect));
-            rects[task.tracker->color.rgb()] = task.rect;
+            int x,y,height, width;
+            task.rect.getRect(&x, &y ,&width, &height);
+            x = double(x) *vui->width() / video_info->compress_x ;
+            y = double(y) *  vui->height()/ video_info->compress_y;
+            width =  double(width) *  vui->width() / video_info->compress_x;
+            height = double(height) *  vui->height() / video_info->compress_y;
+            rects[task.tracker->color.rgb()] = QRect(x,y,width, height);
             vui->show_frame(frame, rects);
             return;
         }
@@ -118,14 +124,12 @@ void TTaskManager::rect_drawed(const QRect& rect){
         task.need_edit = false;
         int x,y,height, width;
         rect.getRect(&x,&y,&width,&height);
-       // qDebug() << "new rect " << rect ;
         // x width
         x = double(x) * video_info->compress_x / vui->width();
         y = double(y) * video_info->compress_y / vui->height();
         width =  double(width) * video_info->compress_x / vui->width();
         height = double(height) * video_info->compress_y / vui->height();
         task.rect = QRect(x,y,width, height);
-        qDebug() << "new rect set to task " << task.rect ;
     }
     window->te_draw_end();
 }

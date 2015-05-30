@@ -8,7 +8,7 @@
 #include "opencv2/opencv.hpp"
 #include "Tracking/TrackingResult.h"
 #include "Dectector/TrackingTask.h"
-
+#include "mainwindow.h"
 struct VideoInfo;
 class Tracking;
 class TrackingWorker : QObject{
@@ -37,10 +37,11 @@ private:
 class Tracking : public QObject{
     Q_OBJECT
 public:
-    Tracking(const std::vector<TrackingTask>& tasks_, VideoInfo* video_info_){
+    Tracking(const std::vector<TrackingTask>& tasks_, VideoInfo* video_info_, MainWindow* window_){
         tasks = tasks_;
         video_info = video_info_;
-        tresult = new TrackingResult;
+        tresult = new TrackingResult(window_, video_info_);
+        window = window_;
     }
     TrackingResult* get_result(){
         return tresult;
@@ -51,6 +52,7 @@ signals:
     void all_done();
 
 private:
+    MainWindow* window;
     void run_task();
     VideoInfo* video_info;
     std::vector<TrackingTask> tasks;

@@ -58,19 +58,9 @@
      </rect>
     </property>
     <property name="currentIndex">
-     <number>0</number>
+     <number>1</number>
     </property>
     <widget class="QWidget" name="fileload">
-     <widget class="QGraphicsView" name="graphicsView_3">
-      <property name="geometry">
-       <rect>
-        <x>210</x>
-        <y>40</y>
-        <width>720</width>
-        <height>405</height>
-       </rect>
-      </property>
-     </widget>
      <widget class="QWidget" name="rtDown" native="true">
       <property name="geometry">
        <rect>
@@ -91,56 +81,56 @@
        </property>
        <layout class="QGridLayout" name="gridLayout_3">
         <item row="0" column="0">
-         <widget class="QPushButton" name="tePlayButton_2">
+         <widget class="QPushButton" name="rtPlayButton">
           <property name="text">
            <string>Play</string>
           </property>
          </widget>
         </item>
         <item row="0" column="2">
-         <widget class="QPushButton" name="tePreFrame_2">
+         <widget class="QPushButton" name="rtPreFrame">
           <property name="text">
            <string>Pre Frame</string>
           </property>
          </widget>
         </item>
         <item row="1" column="0">
-         <widget class="QPushButton" name="tePauseButton_2">
+         <widget class="QPushButton" name="rtPauseButton">
           <property name="text">
            <string>Stop</string>
           </property>
          </widget>
         </item>
         <item row="1" column="1">
-         <widget class="QPushButton" name="teTrackerEnd_2">
+         <widget class="QPushButton" name="rtTrackerEnd">
           <property name="text">
            <string>Tracker End</string>
           </property>
          </widget>
         </item>
         <item row="1" column="2">
-         <widget class="QPushButton" name="teNextFrame_2">
+         <widget class="QPushButton" name="rtNextFrame">
           <property name="text">
            <string>Next Frame</string>
           </property>
          </widget>
         </item>
         <item row="0" column="1">
-         <widget class="QPushButton" name="teTrackerStart_2">
+         <widget class="QPushButton" name="rtTrackerStart">
           <property name="text">
            <string>Tracker Start</string>
           </property>
          </widget>
         </item>
         <item row="0" column="3">
-         <widget class="QPushButton" name="teEditTracker_2">
+         <widget class="QPushButton" name="rtEdit">
           <property name="text">
            <string>Edit Tracker</string>
           </property>
          </widget>
         </item>
         <item row="1" column="3">
-         <widget class="QPushButton" name="pushButton_4">
+         <widget class="QPushButton" name="rtSave">
           <property name="text">
            <string>Save</string>
           </property>
@@ -161,7 +151,7 @@
         <string>Selected Tracker:</string>
        </property>
       </widget>
-      <widget class="QLabel" name="label_13">
+      <widget class="QLabel" name="rtTrackerName">
        <property name="geometry">
         <rect>
          <x>450</x>
@@ -195,14 +185,14 @@
        </property>
        <layout class="QHBoxLayout" name="horizontalLayout_4">
         <item>
-         <widget class="QPushButton" name="pushButton_22">
+         <widget class="QPushButton" name="rtJumpToButton">
           <property name="text">
            <string>Jump To Frame</string>
           </property>
          </widget>
         </item>
         <item>
-         <widget class="QSpinBox" name="spinBox_6"/>
+         <widget class="QSpinBox" name="rtToFrame"/>
         </item>
        </layout>
       </widget>
@@ -226,6 +216,16 @@
         </rect>
        </property>
       </widget>
+     </widget>
+     <widget class="QWidget" name="resultVideoUI" native="true">
+      <property name="geometry">
+       <rect>
+        <x>210</x>
+        <y>40</y>
+        <width>720</width>
+        <height>405</height>
+       </rect>
+      </property>
      </widget>
     </widget>
     <widget class="QWidget" name="task">

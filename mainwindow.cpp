@@ -21,6 +21,7 @@ MainWindow::MainWindow(QWidget *parent) :
     dss = new DecodeSplitStage(this);
     scene_video_ui= new VideoUI(ui->videoUI, this);
     task_video_ui = new VideoUI(ui->taskEditVideoUI, this);
+    result_video_ui = new VideoUI(ui->resultVideoUI, this);
     ui->videoUI = scene_video_ui;
     set_up_scene_split();
     ui->rightPanel->setEnabled(false);
@@ -180,6 +181,10 @@ void MainWindow::set_up_tracking_task(){
     QMetaObject::invokeMethod(vcap, "resize", Q_ARG(QSize,task_video_ui->size()));
 
     QMetaObject::invokeMethod(vcap, "jump_to_frame", Q_ARG(int,0));
+    if(scene_video_ui){
+        disconnect(vcap, SIGNAL(frame_ready(Frame*)),scene_video_ui,
+                               SLOT(show_frame(Frame*)));
+    }
     ttask_manager->connect(vcap, SIGNAL(frame_ready(Frame*)),
                            SLOT(draw_frame_with_rect(Frame*)));
     connect(ui->tePlayButton, SIGNAL(clicked()), vcap, SLOT(play()));
@@ -270,7 +275,7 @@ void MainWindow::on_teSetEnd_clicked()
 void MainWindow::on_startTracking_clicked()
 {
     log("Tracking is running");
-    tracking = new Tracking(ttask_manager->get_task(), ttask_manager->video_info);
+    tracking = new Tracking(ttask_manager->get_task(), ttask_manager->video_info, this);
     connect(tracking, SIGNAL(all_done()), this, SLOT(tracking_done()));
     tracking->run();
     ui->teLeft->setEnabled(false);
@@ -281,7 +286,56 @@ void MainWindow::on_startTracking_clicked()
 
 void MainWindow::tracking_done(){
     qDebug() << "tracking done";
-    ui->stackedWidget->setCurrentIndex(0);
     t_result = tracking->get_result();
+    set_up_final_reslut();
+}
+
+void MainWindow::set_up_final_reslut(){
+    ui->stackedWidget->setCurrentIndex(0);
     t_result->set_list_view(ui->resultList);
+    QMetaObject::invokeMethod(vcap, "resize", Q_ARG(QSize,result_video_ui->size()));
+    QMetaObject::invokeMethod(vcap, "jump_to_frame", Q_ARG(int,0));
+    if(ttask_manager){
+        disconnect(vcap, SIGNAL(frame_ready(Frame*)),ttask_manager,
+                               SLOT(draw_frame_with_rect(Frame*)));
+    }
+    t_result->connect(vcap, SIGNAL(frame_ready(Frame*)),
+                           SLOT(draw_frame_with_rect(Frame*)));
+    connect(ui->rtPlayButton, SIGNAL(clicked()), vcap, SLOT(play()));
+    connect(ui->rtPauseButton, SIGNAL(clicked()), vcap, SLOT(pause()));
+    connect(ui->rtNextFrame, SIGNAL(clicked()), vcap, SLOT(next_frame()));
+    connect(ui->rtPreFrame, SIGNAL(clicked()), vcap, SLOT(pre_frame()));
+    connect(ui->rtEdit, SIGNAL(clicked()), t_result, SLOT(edit_selected()));
+    connect(result_video_ui, SIGNAL(rect_drawed(const QRect&)), t_result, SLOT(rect_drawed(const QRect&)));
+    connect(vcap, SIGNAL(new_frame_fired(int)), t_result, SLOT(set_current_frame(int)));
+    connect(vcap, SIGNAL(new_frame_fired(int)), ui->rtToFrame, SLOT(setValue(int)));
+
+}
+
+void MainWindow::on_rtTrackerStart_clicked()
+{
+   QMetaObject::invokeMethod(vcap, "jump_to_frame", Q_ARG(int ,t_result->get_tracker_start()));
+}
+
+void MainWindow::on_rtTrackerEnd_clicked()
+{
+   QMetaObject::invokeMethod(vcap, "jump_to_frame", Q_ARG(int ,t_result->get_tracker_end()));
+}
+
+
+void MainWindow::on_resultList_clicked(const QModelIndex &index)
+{
+    t_result->select_tracking_task(ui->resultList->item(index.row())->text());
+    ui->rtTrackerName->setText(t_result->get_tracker_name());
+    on_rtTrackerStart_clicked();
+}
+void MainWindow::rt_draw_start(){
+    ui->rtLeft->setEnabled(false);
+    ui->rtUp->setEnabled(false);
+    ui->rtDown->setEnabled(false);
+}
+void MainWindow::rt_draw_end(){
+    ui->rtLeft->setEnabled(true);
+    ui->rtUp->setEnabled(true);
+    ui->rtDown->setEnabled(true);
 }
