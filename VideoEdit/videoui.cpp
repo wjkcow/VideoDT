@@ -5,6 +5,7 @@
 #include <iostream>
 #include <QDebug>
 #include <QPixmap>
+#include <QRgb>
 #include <DecodeSplit/DSPipeline/FrameTypes.h>
 
 VideoUI::VideoUI(QWidget* place, QWidget * parent, bool drawable_):VideoUI(place->parentWidget()){
@@ -34,12 +35,15 @@ void VideoUI::paintEvent(QPaintEvent *){
             p.setPen(draw_color);
             p.drawRect(draw_rect);
         }
-        for(int i = 0; i < rects.size(); i++){
-            if(show_draw_rect && draw_color == rects[i].first){
+        auto i = rects.constBegin();
+        while(i != rects.constEnd()){
+            if(show_draw_rect && draw_color == QColor(i.key())){
+                i++;
                 continue;
             }
-            p.setPen(rects[i].first);
-            p.drawRect(rects[i].second);
+            p.setPen(QColor(i.key()));
+            p.drawRect(i.value());
+            i ++;
         }
     }
 
@@ -90,7 +94,7 @@ void VideoUI::show_frame(Frame* frame){
     update();
 }
 
-void VideoUI::show_frame(Frame* frame, std::vector<QPair<QColor, QRect>> rects_){
+void VideoUI::show_frame(Frame* frame, QHash<QRgb, QRect> rects_){
  //   QImage img(frame->data, frame->cols, frame->rows, frame->step,
  //                                      QImage::Format_RGB888);
     show_draw_rect = false;

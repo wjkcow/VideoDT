@@ -6,6 +6,7 @@
 #include <QColor>
 #include <QDebug>
 #include <QMessageBox>
+#include <QRgb>
 #include "VideoEdit/videoui.h"
 #include "DecodeSplit/DSPipeline/FrameTypes.h"
 QColor color_set[] = {Qt::green, Qt::blue, Qt::red,
@@ -58,13 +59,14 @@ void TTaskManager::update_task_list_view(){
 }
 
 void TTaskManager::draw_frame_with_rect(Frame* frame){
-    std::vector<QPair<QColor, QRect>> rects;
+   // std::vector<QPair<QColor, QRect>> rects;
  //   rects.push_back(QPair<QColor,QRect>(Qt::green, QRect(10,10,50,50)));
-
+    QHash<QRgb, QRect>rects;
     if(selected_ctask_idx >= 0 && selected_ctask_idx < candidate_tasks.size()){
         TrackingTask& task = candidate_tasks[selected_ctask_idx];
         if(frame->seq == task.from_frame && !task.need_edit){
-            rects.push_back(QPair<QColor,QRect>(task.tracker->color, task.rect));
+     //       rects.push_back(QPair<QColor,QRect>(task.tracker->color, task.rect));
+            rects[task.tracker->color.rgb()] = task.rect;
             vui->show_frame(frame, rects);
             return;
         }

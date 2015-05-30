@@ -37,6 +37,7 @@ public slots:
     void add_to_task();
     void remove_selected_task();
 
+
 private:
     int current_frame;
     MainWindow* window;
@@ -47,13 +48,11 @@ private:
     QListWidget* ctask_list_view;
     QListWidget* task_list_view;
 
-    VideoInfo* video_info;
     VideoUI* vui;
     QHash<QString, TrackerInfo*> trackers_name;
     int selected_ctask_idx = -1;
-
-
-
+public:
+    VideoInfo* video_info;
 };
 
 
