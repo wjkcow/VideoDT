@@ -1,5 +1,6 @@
 #include "FrameLibrary.h"
 #include "DecodeSplit/DSPipeline/Utility.h"
+#include <QDebug>
 
 FrameLibrary::FrameLibrary(const QString& tmp_path_): tmp_path(tmp_path_)
 {

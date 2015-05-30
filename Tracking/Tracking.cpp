@@ -6,6 +6,7 @@
 #include <QtConcurrent/QtConcurrentMap>
 #include <QtConcurrent/QtConcurrentRun>
 #include <QFutureWatcher>
+#include <QDebug>
 #include "FrameLibrary.h"
 #include "Tracking/CppMT/CMT.h"
 #include "opencv2/opencv.hpp"
@@ -20,6 +21,8 @@ TrackingWorker::TrackingWorker(TrackingTask task,const QString& path_,Tracking* 
     }
 
 void TrackingWorker::run(){
+        qDebug() << "Tracker"  << m_task.tracker->name << " started with " << m_task.rect ;
+
         m_future = QtConcurrent::run(this, &TrackingWorker::parallel_task_run);
         m_future_watcher.setFuture(m_future);
 }
@@ -31,22 +34,30 @@ void TrackingWorker::task_done(){
 }
 void TrackingWorker::parallel_task_run(){
         cmt::CMT cmt;
-
+    //    qDebug() << path;
         FrameLibrary flib(path);
         m_task.rect;
         results[m_task.from_frame] = m_task.rect;
         // initialize
-        Mat im;
-        Mat im_gray;
-        flib.get(m_task.from_frame, im);
-        cvtColor(im, im_gray, CV_BGR2GRAY);
-        cmt.initialize(im_gray, to_cv_rect(m_task.rect));
+        Mat im0;
+        Mat im0_gray;
+        flib.get(m_task.from_frame, im0);
+        cvtColor(im0, im0_gray, CV_BGR2GRAY);
+        cmt.initialize(im0_gray, to_cv_rect(m_task.rect));
+     //   cv::imwrite("/Users/wjkcow/Desktop/tmp/i.png",im_gray(to_cv_rect(m_task.rect)));
+
         // run
-        for(int i = m_task.from_frame + 1; i < m_task.to_frame; i++){
+        //int j = 0;
+        for(int i = m_task.from_frame; i < m_task.to_frame; i++){
+              Mat im;
+              Mat im_gray;
               flib.get(i, im);
               cvtColor(im, im_gray, CV_BGR2GRAY);
               cmt.processFrame(im_gray);
+            //  cv::Mat submat = im_gray(cmt.bb_rot.boundingRect());
+            //  cv::imwrite("/Users/wjkcow/Desktop/tmp/" + QString::number(j++).toStdString() + ".png",im);
               results[i] = to_q_rect(cmt.bb_rot.boundingRect());
+
         }
 
 }

@@ -77,7 +77,6 @@ void TrackingResult::draw_frame_with_rect(Frame* frame){
             height = double(height) * window->get_result_ui()->height() / video_info->compress_y;
             rects.insert(i.key(), QRect(x,y,width, height));
         }
-
         window->get_result_ui()->show_frame(frame, rects);
     } else {
         window->get_result_ui()->show_frame(frame);
