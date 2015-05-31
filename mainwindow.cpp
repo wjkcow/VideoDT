@@ -25,7 +25,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->videoUI = scene_video_ui;
     set_up_scene_split();
     ui->rightPanel->setEnabled(false);
-    fake_page_2();
+  //  fake_page_2();
 }
 
 MainWindow::~MainWindow()
