@@ -974,6 +974,26 @@ p, li { white-space: pre-wrap; }
         </rect>
        </property>
       </widget>
+      <widget class="QComboBox" name="trackingAlgorithm">
+       <property name="geometry">
+        <rect>
+         <x>30</x>
+         <y>410</y>
+         <width>104</width>
+         <height>26</height>
+        </rect>
+       </property>
+       <item>
+        <property name="text">
+         <string>TLD</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>CMT</string>
+        </property>
+       </item>
+      </widget>
      </widget>
      <widget class="QWidget" name="teUp" native="true">
       <property name="geometry">

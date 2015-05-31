@@ -25,7 +25,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->videoUI = scene_video_ui;
     set_up_scene_split();
     ui->rightPanel->setEnabled(false);
-   // fake_page_2();
+    fake_page_2();
 }
 
 MainWindow::~MainWindow()
@@ -275,7 +275,7 @@ void MainWindow::on_teSetEnd_clicked()
 void MainWindow::on_startTracking_clicked()
 {
     log("Tracking is running");
-    tracking = new Tracking(ttask_manager->get_task(), ttask_manager->video_info, this);
+    tracking = new Tracking(ttask_manager->get_task(), ttask_manager->video_info, this, ui->trackingAlgorithm->currentText());
     connect(tracking, SIGNAL(all_done()), this, SLOT(tracking_done()));
     tracking->run();
     ui->teLeft->setEnabled(false);

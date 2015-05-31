@@ -41,7 +41,29 @@ SOURCES += main.cpp\
     Tracking/CppMT/Matcher.cpp \
     Tracking/CppMT/Tracker.cpp \
     Tracking/CppMT/fastcluster/fastcluster.cpp \
-    Dectector/TrackerInfo.cpp
+    Dectector/TrackerInfo.cpp \
+    Tracking/TrackingAlgorithm.cpp \
+    Tracking/OpenTLD/src/3rdparty/cvblobs/blob.cpp \
+    Tracking/OpenTLD/src/3rdparty/cvblobs/BlobContour.cpp \
+    Tracking/OpenTLD/src/3rdparty/cvblobs/BlobOperators.cpp \
+    Tracking/OpenTLD/src/3rdparty/cvblobs/BlobProperties.cpp \
+    Tracking/OpenTLD/src/3rdparty/cvblobs/BlobResult.cpp \
+    Tracking/OpenTLD/src/3rdparty/cvblobs/ComponentLabeling.cpp \
+    Tracking/OpenTLD/src/libopentld/tld/Clustering.cpp \
+    Tracking/OpenTLD/src/libopentld/tld/DetectionResult.cpp \
+    Tracking/OpenTLD/src/libopentld/tld/DetectorCascade.cpp \
+    Tracking/OpenTLD/src/libopentld/tld/EnsembleClassifier.cpp \
+    Tracking/OpenTLD/src/libopentld/tld/ForegroundDetector.cpp \
+    Tracking/OpenTLD/src/libopentld/tld/MedianFlowTracker.cpp \
+    Tracking/OpenTLD/src/libopentld/tld/NNClassifier.cpp \
+    Tracking/OpenTLD/src/libopentld/tld/TLD.cpp \
+    Tracking/OpenTLD/src/libopentld/tld/TLDUtil.cpp \
+    Tracking/OpenTLD/src/libopentld/tld/VarianceFilter.cpp \
+    Tracking/OpenTLD/src/libopentld/mftracker/BB.cpp \
+    Tracking/OpenTLD/src/libopentld/mftracker/BBPredict.cpp \
+    Tracking/OpenTLD/src/libopentld/mftracker/FBTrack.cpp \
+    Tracking/OpenTLD/src/libopentld/mftracker/Lk.cpp \
+    Tracking/OpenTLD/src/libopentld/mftracker/Median.cpp
 
 HEADERS  += \
     mainwindow.h \
@@ -74,7 +96,32 @@ HEADERS  += \
     Tracking/CppMT/Tracker.h \
     Tracking/CppMT/fastcluster/fastcluster.h \
     Tracking/CppMT/logging/log.h \
-    Dectector/TrackerInfo.h
+    Dectector/TrackerInfo.h \
+    Tracking/TrackingAlgorithm.h \
+    Tracking/OpenTLD/src/3rdparty/cvblobs/blob.h \
+    Tracking/OpenTLD/src/3rdparty/cvblobs/BlobContour.h \
+    Tracking/OpenTLD/src/3rdparty/cvblobs/BlobLibraryConfiguration.h \
+    Tracking/OpenTLD/src/3rdparty/cvblobs/BlobOperators.h \
+    Tracking/OpenTLD/src/3rdparty/cvblobs/BlobProperties.h \
+    Tracking/OpenTLD/src/3rdparty/cvblobs/BlobResult.h \
+    Tracking/OpenTLD/src/3rdparty/cvblobs/ComponentLabeling.h \
+    Tracking/OpenTLD/src/libopentld/tld/Clustering.h \
+    Tracking/OpenTLD/src/libopentld/tld/DetectionResult.h \
+    Tracking/OpenTLD/src/libopentld/tld/DetectorCascade.h \
+    Tracking/OpenTLD/src/libopentld/tld/EnsembleClassifier.h \
+    Tracking/OpenTLD/src/libopentld/tld/ForegroundDetector.h \
+    Tracking/OpenTLD/src/libopentld/tld/IntegralImage.h \
+    Tracking/OpenTLD/src/libopentld/tld/MedianFlowTracker.h \
+    Tracking/OpenTLD/src/libopentld/tld/NNClassifier.h \
+    Tracking/OpenTLD/src/libopentld/tld/NormalizedPatch.h \
+    Tracking/OpenTLD/src/libopentld/tld/TLD.h \
+    Tracking/OpenTLD/src/libopentld/tld/TLDUtil.h \
+    Tracking/OpenTLD/src/libopentld/tld/VarianceFilter.h \
+    Tracking/OpenTLD/src/libopentld/mftracker/BB.h \
+    Tracking/OpenTLD/src/libopentld/mftracker/BBPredict.h \
+    Tracking/OpenTLD/src/libopentld/mftracker/FBTrack.h \
+    Tracking/OpenTLD/src/libopentld/mftracker/Lk.h \
+    Tracking/OpenTLD/src/libopentld/mftracker/Median.h
 
 FORMS    += \
     mainwindow.ui

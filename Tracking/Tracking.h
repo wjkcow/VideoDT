@@ -14,18 +14,13 @@ class Tracking;
 class TrackingWorker : QObject{
     Q_OBJECT
 public:
-    TrackingWorker(TrackingTask task,const QString& path_,Tracking* tracking_, TrackingResult* result_);
+    TrackingWorker(TrackingTask task,const QString& path_,Tracking* tracking_, TrackingResult* result_,
+                   const QString& type_);
     void run();
 public slots:
     void task_done();
 private:
     void parallel_task_run();
-    cv::Rect to_cv_rect(const QRect& rect){
-        return cv::Rect(rect.x(), rect.y(), rect.width(), rect.height());
-    }
-    QRect to_q_rect(const cv::Rect& rect){
-        return QRect(rect.x, rect.y, rect.width, rect.height);
-    }
     TrackingTask m_task;
     QString path;
     Tracking* tracking;
@@ -33,15 +28,18 @@ private:
     QHash<int, QRect> results;
     QFuture<void> m_future;
     QFutureWatcher<void> m_future_watcher;
+    QString type;
 };
 class Tracking : public QObject{
     Q_OBJECT
 public:
-    Tracking(const std::vector<TrackingTask>& tasks_, VideoInfo* video_info_, MainWindow* window_){
+    Tracking(const std::vector<TrackingTask>& tasks_, VideoInfo* video_info_, MainWindow* window_,
+             const QString& type_){
         tasks = tasks_;
         video_info = video_info_;
         tresult = new TrackingResult(window_, video_info_);
         window = window_;
+        type = type_;
     }
     TrackingResult* get_result(){
         return tresult;
@@ -58,6 +56,7 @@ private:
     std::vector<TrackingTask> tasks;
     QSet<TrackingWorker*> unfinshed_jobs;
     TrackingResult* tresult;
+    QString type;
 };
 
 
